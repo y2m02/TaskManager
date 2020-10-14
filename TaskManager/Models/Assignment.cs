@@ -7,7 +7,7 @@ namespace TaskManager.Models
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public int TaskId { get; set; }
+        public int AssignmentId { get; set; }
 
         [Required]
         [StringLength(500)]
