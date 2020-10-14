@@ -62,6 +62,7 @@ namespace TaskManager.Repositories
             AddPropertiesToModify(entity, new List<string>
             {
                 nameof(entity.Description),
+                nameof(entity.StoreId),
             });
 
             await Save();

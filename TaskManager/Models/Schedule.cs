@@ -13,14 +13,14 @@ namespace TaskManager.Models
         [Required]
         public DateTime Date { get; set; }
 
-        public int TaskId { get; set; }
+        public int AssignmentId { get; set; }
 
         public int? StatusId { get; set; }
 
         [StringLength(1000)]
         public string Note { get; set; }
 
-        [ForeignKey(nameof(TaskId))]
+        [ForeignKey(nameof(AssignmentId))]
         public virtual Assignment Task { get; set; }
 
         [ForeignKey(nameof(StatusId))]
