@@ -12,7 +12,7 @@ namespace TaskManager.Models
 
         public DbSet<Store> Stores { get; set; }
         public DbSet<Status> Statuses { get; set; }
-        public DbSet<Task> Tasks { get; set; }
+        public DbSet<Assignment> Tasks { get; set; }
         public DbSet<Schedule> Schedules { get; set; }
     }
 }

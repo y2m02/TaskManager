@@ -21,7 +21,7 @@ namespace TaskManager.Models
         public string Note { get; set; }
 
         [ForeignKey(nameof(TaskId))]
-        public virtual Task Task { get; set; }
+        public virtual Assignment Task { get; set; }
 
         [ForeignKey(nameof(StatusId))]
         public virtual Status Status { get; set; }

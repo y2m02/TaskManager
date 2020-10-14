@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TaskManager.Models
 {
-    public class Task
+    public class Assignment
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
