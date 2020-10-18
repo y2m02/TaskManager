@@ -22,14 +22,14 @@ namespace TaskManagerApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
+        [Route("Get")]
         public async Task<IEnumerable<StatusResponse>> GetAll()
         {
             return Mapper.Map<IEnumerable<StatusResponse>>(await _statusRepository.GetAll());
         }
 
         [HttpGet]
-        [Route("GetById/{id}")]
+        [Route("Get/{id}")]
         public async Task<StatusResponse> GetById(int id)
         {
             return Mapper.Map<StatusResponse>(await _statusRepository.GetById(id));

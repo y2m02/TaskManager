@@ -22,7 +22,7 @@ namespace TaskManagerApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAll")]
+        [Route("Get")]
         public async Task<IEnumerable<StoreResponse>> GetAll()
         {
             var stores = Mapper.Map<IEnumerable<StoreResponse>>(await _storeRepository.GetAll());
@@ -31,7 +31,7 @@ namespace TaskManagerApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetById/{id}")]
+        [Route("Get/{id}")]
         public async Task<StoreResponse> GetById(int id)
         {
             var store = Mapper.Map<StoreResponse>(await _storeRepository.GetById(id));
