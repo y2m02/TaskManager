@@ -19,7 +19,6 @@ namespace TaskManagerApi.Repositories
     {
         public AssignmentRepository(TaskManagerContext context) : base(context)
         {
-
         }
 
         public async Task Create(Assignment entity)
@@ -33,6 +32,7 @@ namespace TaskManagerApi.Repositories
         {
             return await Context.Assignments
                 .Include(w => w.Schedule)
+                .ThenInclude(w => w.Status)
                 .Include(w => w.Store)
                 .ToListAsync()
                 .ConfigureAwait(false);
@@ -50,6 +50,7 @@ namespace TaskManagerApi.Repositories
         {
             return await Context.Assignments
                 .Include(w => w.Schedule)
+                .ThenInclude(w => w.Status)
                 .Include(w => w.Store)
                 .SingleAsync(w => w.AssignmentId == id)
                 .ConfigureAwait(false);
@@ -62,7 +63,7 @@ namespace TaskManagerApi.Repositories
             AddPropertiesToModify(entity, new List<string>
             {
                 nameof(entity.Description),
-                nameof(entity.StoreId),
+                nameof(entity.StoreId)
             });
 
             await Save();

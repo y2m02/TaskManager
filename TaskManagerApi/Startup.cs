@@ -38,7 +38,7 @@ namespace TaskManagerApi
             {
                 c.SwaggerDoc("v1", new OpenApiInfo
                 {
-                    Title = "Swagger XML Payment",
+                    Title = "Swagger Task Manager API",
                     Version = "v1"
                 });
             });

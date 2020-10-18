@@ -31,7 +31,7 @@ namespace TaskManagerApi.Repositories
         {
             return await Context.Schedules
                 .Include(w => w.Status)
-                .Include(w => w.Task)
+                .Include(w => w.Assignment)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -40,7 +40,7 @@ namespace TaskManagerApi.Repositories
         {
             return await Context.Schedules
                 .Include(w => w.Status)
-                .Include(w => w.Task)
+                .Include(w => w.Assignment)
                 .SingleAsync(w => w.ScheduleId == id)
                 .ConfigureAwait(false);
         }
