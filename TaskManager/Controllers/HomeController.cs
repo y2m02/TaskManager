@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using TaskManager.ApiHelpers;
 using TaskManager.Models;
-using TaskManager.Models.Responses;
+using StoreViewModel = TaskManager.Models.ViewModels.StoreViewModel;
 
 namespace TaskManager.Controllers
 {
@@ -29,7 +29,7 @@ namespace TaskManager.Controllers
 
             await new ApiClient().Post<object>(ApiPath.Create(ApiControllerName.Store), store);
 
-            var stores = await new ApiClient().Get<IEnumerable<StoreResponse>>(ApiPath.Get(ApiControllerName.Store));
+            var stores = await new ApiClient().Get<IEnumerable<StoreViewModel>>(ApiPath.Get(ApiControllerName.Store));
 
             return View();
         }
