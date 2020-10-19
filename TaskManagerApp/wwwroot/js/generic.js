@@ -24,13 +24,6 @@ function buildError(field, label) {
     return true;
 }
 
-function onClick(img) {
-    var src = img.currentSrc;
-
-    window.$("#imageId").attr("src", src);
-    window.$("#myModalImage").modal();
-}
-
 $(function() {
     window.$("input").attr("autocomplete", "off");
 });
@@ -90,11 +83,13 @@ function appendNewOption(elementId, id, description) {
     window.$("#" + elementId).append(option);
 }
 
-function redirectToIndex(e, controller) {
+function redirectToIndex(e, gridName) {
     if ((e.type == "create" || e.type == "update" || e.type == "destroy") && !e.response.modelState) {
         //var data = e.response.Data[0];
         //window.location.href = "@(Url.Action("Index", "Size"))";
-        window.location.href = "/" + controller + "/Index";
+        //window.location.href = "/" + controller + "/Index";
+
+        RefreshGrid(gridName)
     }
 }
 
@@ -155,4 +150,10 @@ function convertToNumericFormat(quantity) {
     }
 
     return fixedQuantity;
+}
+
+function RefreshGrid(gridName) {
+    var grid  = window.$('#' + gridName).data("kendoGrid");
+    grid.dataSource.read();
+    grid.refresh();
 }

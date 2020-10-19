@@ -46,7 +46,7 @@ namespace TaskManagerApp.ApiHelpers
             return await Execute<TResponse>(PrepareRequest(HttpMethod.Delete, path)).ConfigureAwait(false);
         }
 
-        private static async Task<TResponse> SetRequest<TResponse>(HttpMethod method, string path, object body = null)
+        private async Task<TResponse> SetRequest<TResponse>(HttpMethod method, string path, object body = null)
         {
             var request = PrepareRequest(method, path);
 
@@ -67,7 +67,7 @@ namespace TaskManagerApp.ApiHelpers
             }
         }
 
-        private static HttpRequestMessage PrepareRequest(HttpMethod method, string path)
+        private HttpRequestMessage PrepareRequest(HttpMethod method, string path)
         {
             var request = new HttpRequestMessage(method, new Uri($"{_baseApiUrl}{path}"));
 

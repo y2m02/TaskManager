@@ -100,7 +100,7 @@
                 .Model(model => model.Id(p => p.AssignmentId))
                 .Read(read => read.Action("GetAll", "Assignment"))
             .Group(group => group.Add("StatusDescription", typeof(string), ListSortDirection.Ascending))
-            .Group(group => group.Add("StoreName", typeof(string), ListSortDirection.Ascending))
+            //.Group(group => group.Add("StoreName", typeof(string), ListSortDirection.Ascending))
             ))
     </div>
 </div>

@@ -10,6 +10,13 @@ namespace TaskManagerApp.Controllers
 {
     public class StoreController : Controller
     {
+        private readonly IApiClientService _apiClientService;
+
+        public StoreController(IApiClientService apiClientService)
+        {
+            _apiClientService = apiClientService;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -17,7 +24,7 @@ namespace TaskManagerApp.Controllers
 
         public async Task<JsonResult> GetAll([DataSourceRequest] DataSourceRequest request)
         {
-            var response = await ApiClient.Get<IEnumerable<StoreViewModel>>(ApiPath.Get(ApiControllerName.Store))
+            var response = await _apiClientService.Get<IEnumerable<StoreViewModel>>(ApiPath.Get(ApiControllerName.Store))
                 .ConfigureAwait(false);
 
             return Json(await response.ToDataSourceResultAsync(request));
@@ -29,7 +36,7 @@ namespace TaskManagerApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                await ApiClient.Post<object>(
+                await _apiClientService.Post<object>(
                     ApiPath.BatchCreate(ApiControllerName.Store), 
                     stores
                 );
@@ -44,7 +51,7 @@ namespace TaskManagerApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                await ApiClient.Put<object>(
+                await _apiClientService.Put<object>(
                     ApiPath.BatchUpdate(ApiControllerName.Store), 
                     stores
                 );

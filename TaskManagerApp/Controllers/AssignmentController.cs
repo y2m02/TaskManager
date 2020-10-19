@@ -3,6 +3,7 @@ using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using TaskManagerApi.Models.Responses;
 using TaskManagerApp.ApiHelpers;
 using TaskManagerApp.Models.Enums;
 using TaskManagerApp.Models.ViewModels;
@@ -11,11 +12,18 @@ namespace TaskManagerApp.Controllers
 {
     public class AssignmentController : Controller
     {
+        private readonly IApiClientService _apiClientService;
+
+        public AssignmentController(IApiClientService apiClientService)
+        {
+            _apiClientService = apiClientService;
+        }
+
         public async Task<IActionResult> Index()
         {
-            ViewBag.Stores = await ApiClient
-                .Post<IEnumerable<AssignmentViewModel>>(
-                ApiPath.Get(ApiControllerName.ItemType), 
+            ViewBag.Stores = await _apiClientService
+                .Post<IEnumerable<ItemTypeResponse>>(
+                ApiPath.Get(ApiControllerName.ItemType),
                 new List<ItemType> { ItemType.Store }
             )
             .ConfigureAwait(false);
@@ -25,7 +33,7 @@ namespace TaskManagerApp.Controllers
 
         public async Task<JsonResult> GetAll([DataSourceRequest] DataSourceRequest request)
         {
-            var response = await ApiClient
+            var response = await _apiClientService
                 .Get<IEnumerable<AssignmentViewModel>>(ApiPath.Get(ApiControllerName.Assignment))
                 .ConfigureAwait(false);
 
@@ -38,7 +46,7 @@ namespace TaskManagerApp.Controllers
         {
             if (request.AssignmentId > 0)
             {
-                await ApiClient
+                await _apiClientService
                     .Put<AssignmentRequest>(
                         ApiPath.Update(ApiControllerName.Assignment),
                         request
@@ -48,7 +56,7 @@ namespace TaskManagerApp.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            await ApiClient
+            await _apiClientService
                 .Post<AssignmentRequest>(
                     ApiPath.Create(ApiControllerName.Assignment),
                     request

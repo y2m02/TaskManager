@@ -7,7 +7,7 @@
         //GetDropDownListData("cbxCategories", rowData.CategoryId, "Category");
         fillFields(rowData);
 
-        window.$("#myModalProduct").modal();
+        window.$("#myModalAssignment").modal();
     });
 
 function fillFields(rowData) {

@@ -1,6 +1,5 @@
 ﻿@using TaskManagerApp.Models
 @using TaskManagerApp.Models.ViewModels
-@using TaskManagerApp.ApiHelpers
 @{
     ViewData["Title"] = SpanishTitle.Status;
 }
@@ -9,7 +8,7 @@
 
 @(Html.Kendo().Grid<StatusViewModel>
     ()
-    .Name("Stores")
+    .Name("Statuses")
     .Columns(columns =>
     {
         columns.Bound(c => c.StatusId).Hidden();
@@ -91,6 +90,6 @@
 
 <script>
     function onRequestEnd(e) {
-        redirectToIndex(e, "@ApiControllerName.Status");
+        redirectToIndex(e, "Statuses");
     }
 </script>
