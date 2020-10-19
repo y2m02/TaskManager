@@ -8,7 +8,7 @@ using TaskManagerApp.Models.ViewModels;
 
 namespace TaskManagerApp.Controllers
 {
-    public class StoreController : BaseController
+    public class StoreController : Controller
     {
         public IActionResult Index()
         {
