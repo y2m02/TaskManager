@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using TaskManagerApi.Models;
+using TaskManagerApi.Models.Enums;
 using TaskManagerApi.Models.Requests.Assignments;
 using TaskManagerApi.Models.Requests.Schedules;
 using TaskManagerApi.Models.Requests.Statuses;
@@ -37,6 +38,30 @@ namespace TaskManagerApi.Mappings
                     member => member.MapFrom(field => field.Status.Description));
             CreateMap<ScheduleRequest, Schedule>();
             CreateMap<UpdateScheduleRequest, Schedule>();
+
+            CreateMap<Store, ItemTypeResponse>()
+                .ForMember(destination => destination.ItemId,
+                    member => member.MapFrom(field => field.StoreId))
+                .ForMember(destination => destination.Description,
+                    member => member.MapFrom(field => field.Name))
+                .ForMember(destination => destination.Type,
+                    member => member.MapFrom(field => ItemType.Store));
+
+            CreateMap<Assignment, ItemTypeResponse>()
+                .ForMember(destination => destination.ItemId,
+                    member => member.MapFrom(field => field.AssignmentId))
+                .ForMember(destination => destination.Description,
+                    member => member.MapFrom(field => field.Description))
+                .ForMember(destination => destination.Type,
+                    member => member.MapFrom(field => ItemType.Assignment));
+
+            CreateMap<Status, ItemTypeResponse>()
+                .ForMember(destination => destination.ItemId,
+                    member => member.MapFrom(field => field.StatusId))
+                .ForMember(destination => destination.Description,
+                    member => member.MapFrom(field => field.Description))
+                .ForMember(destination => destination.Type,
+                    member => member.MapFrom(field => ItemType.Status));
         }
     }
 }

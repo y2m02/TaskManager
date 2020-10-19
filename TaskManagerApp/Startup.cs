@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Newtonsoft.Json.Serialization;
+using TaskManagerApp.ApiHelpers;
 
 namespace TaskManagerApp
 {
@@ -29,6 +30,8 @@ namespace TaskManagerApp
 
             services.AddRazorPages()
                 .AddRazorRuntimeCompilation();
+
+            services.AddScoped<IApiClientService, ApiClient>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

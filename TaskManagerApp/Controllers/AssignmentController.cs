@@ -1,17 +1,25 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Kendo.Mvc.Extensions;
+﻿using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TaskManagerApp.ApiHelpers;
+using TaskManagerApp.Models.Enums;
 using TaskManagerApp.Models.ViewModels;
 
 namespace TaskManagerApp.Controllers
 {
     public class AssignmentController : Controller
     {
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            ViewBag.Stores = await ApiClient
+                .Post<IEnumerable<AssignmentViewModel>>(
+                ApiPath.Get(ApiControllerName.ItemType), 
+                new List<ItemType> { ItemType.Store }
+            )
+            .ConfigureAwait(false);
+
             return View();
         }
 
@@ -32,7 +40,7 @@ namespace TaskManagerApp.Controllers
             {
                 await ApiClient
                     .Put<AssignmentRequest>(
-                        ApiPath.Update(ApiControllerName.Assignment), 
+                        ApiPath.Update(ApiControllerName.Assignment),
                         request
                     )
                     .ConfigureAwait(false);
@@ -42,7 +50,7 @@ namespace TaskManagerApp.Controllers
 
             await ApiClient
                 .Post<AssignmentRequest>(
-                    ApiPath.Create(ApiControllerName.Assignment), 
+                    ApiPath.Create(ApiControllerName.Assignment),
                     request
                 )
                 .ConfigureAwait(false);

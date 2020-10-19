@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -8,21 +9,34 @@ using TaskManagerApp.Extensions;
 
 namespace TaskManagerApp.ApiHelpers
 {
-    public class ApiClient
+    public interface IApiClientService
     {
-        private const string BaseApiUrl = "http://taskmanagerapi.com/api/";
+        Task<TResponse> Get<TResponse>(string path);
+        Task<TResponse> Post<TResponse>(string path, object body = null);
+        Task Put<TResponse>(string path, object body = null);
+        Task<TResponse> Delete<TResponse>(string path);
+    }
 
-        public static async Task<TResponse> Get<TResponse>(string path)
+    public class ApiClient : IApiClientService
+    {
+        private readonly string _baseApiUrl;
+
+        public ApiClient(IConfiguration configuration)
+        {
+            _baseApiUrl = configuration.GetSection("API_URL").Value;
+        }
+
+        public async Task<TResponse> Get<TResponse>(string path)
         {
             return await Execute<TResponse>(PrepareRequest(HttpMethod.Get, path)).ConfigureAwait(false);
         }
 
-        public static async Task Post<TResponse>(string path, object body = null)
+        public async Task<TResponse> Post<TResponse>(string path, object body = null)
         {
-            await SetRequest<TResponse>(HttpMethod.Post, path, body).ConfigureAwait(false);
+            return await SetRequest<TResponse>(HttpMethod.Post, path, body).ConfigureAwait(false);
         }
 
-        public static async Task Put<TResponse>(string path, object body = null)
+        public async Task Put<TResponse>(string path, object body = null)
         {
             await SetRequest<TResponse>(HttpMethod.Put, path, body).ConfigureAwait(false);
         }
@@ -32,13 +46,13 @@ namespace TaskManagerApp.ApiHelpers
             return await Execute<TResponse>(PrepareRequest(HttpMethod.Delete, path)).ConfigureAwait(false);
         }
 
-        private static async Task SetRequest<TResponse>(HttpMethod method, string path, object body = null)
+        private static async Task<TResponse> SetRequest<TResponse>(HttpMethod method, string path, object body = null)
         {
             var request = PrepareRequest(method, path);
 
             AddContent(request, body);
 
-            await Execute<TResponse>(request).ConfigureAwait(false);
+            return await Execute<TResponse>(request).ConfigureAwait(false);
         }
 
         private static void AddContent(HttpRequestMessage request, object body)
@@ -55,7 +69,7 @@ namespace TaskManagerApp.ApiHelpers
 
         private static HttpRequestMessage PrepareRequest(HttpMethod method, string path)
         {
-            var request = new HttpRequestMessage(method, new Uri($"{BaseApiUrl}{path}"));
+            var request = new HttpRequestMessage(method, new Uri($"{_baseApiUrl}{path}"));
 
             return AddHeaders(request);
         }
@@ -79,7 +93,7 @@ namespace TaskManagerApp.ApiHelpers
                 return rawResponse.DeserializeJson<TResponse>();
             }
 
-            var statusCode = (int) response.StatusCode;
+            var statusCode = (int)response.StatusCode;
 
             throw statusCode switch
             {
