@@ -3,12 +3,12 @@ using System.ComponentModel.DataAnnotations;
 
 namespace TaskManagerApp.Models.ViewModels
 {
-    public class StoreViewModel
+    public class StatusViewModel
     {
-        public int StoreId { get; set; }
-
-        [DisplayName("Nombre")]
+        public int StatusId { get; set; }
+        
+        [DisplayName("Descripción")]
         [Required(ErrorMessage = "Campo {0} requerido.")]
-        public string Name { get; set; }
+        public string Description { get; set; }
     }
 }

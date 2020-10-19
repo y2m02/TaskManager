@@ -8,7 +8,7 @@ using TaskManagerApp.Models.ViewModels;
 
 namespace TaskManagerApp.Controllers
 {
-    public class StoreController : BaseController
+    public class StatusController : BaseController
     {
         public IActionResult Index()
         {
@@ -18,7 +18,7 @@ namespace TaskManagerApp.Controllers
         public async Task<JsonResult> GetAll([DataSourceRequest] DataSourceRequest request)
         {
             var response = await GetApiClient()
-                .Get<IEnumerable<StoreViewModel>>(ApiPath.Get(ApiControllerName.Store))
+                .Get<IEnumerable<StatusViewModel>>(ApiPath.Get(ApiControllerName.Status))
                 .ConfigureAwait(false);
 
             return Json(await response.ToDataSourceResultAsync(request));
@@ -26,32 +26,32 @@ namespace TaskManagerApp.Controllers
 
         [HttpPost]
         public async Task<IActionResult> BatchCreate([DataSourceRequest] DataSourceRequest request,
-            [Bind(Prefix = "models")] IEnumerable<StoreViewModel> stores)
+            [Bind(Prefix = "models")] IEnumerable<StatusViewModel> statuses)
         {
             if (ModelState.IsValid)
             {
                 await GetApiClient().Post<object>(
-                    ApiPath.BatchCreate(ApiControllerName.Store), 
-                    stores
+                    ApiPath.BatchCreate(ApiControllerName.Status), 
+                    statuses
                 );
             }
 
-            return Json(await stores.ToDataSourceResultAsync(request, ModelState));
+            return Json(await statuses.ToDataSourceResultAsync(request, ModelState));
         }
 
         [HttpPost]
         public async Task<IActionResult> BatchUpdate([DataSourceRequest] DataSourceRequest request,
-            [Bind(Prefix = "models")] IEnumerable<StoreViewModel> stores)
+            [Bind(Prefix = "models")] IEnumerable<StatusViewModel> statuses)
         {
             if (ModelState.IsValid)
             {
                 await GetApiClient().Put<object>(
-                    ApiPath.BatchUpdate(ApiControllerName.Store), 
-                    stores
+                    ApiPath.BatchUpdate(ApiControllerName.Status), 
+                    statuses
                 );
             }
 
-            return Json(await stores.ToDataSourceResultAsync(request, ModelState));
+            return Json(await statuses.ToDataSourceResultAsync(request, ModelState));
         }
     }
 }

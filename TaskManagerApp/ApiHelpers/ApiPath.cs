@@ -8,6 +8,10 @@
 
         public static string Create(string controller) => $"{controller}/Create";
 
+        public static string BatchCreate(string controller) => $"{controller}/BatchCreate";
+
         public static string Update(string controller) => $"{controller}/Update";
+
+        public static string BatchUpdate(string controller) => $"{controller}/BatchUpdate";
     }
 }

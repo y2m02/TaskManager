@@ -46,11 +46,25 @@ namespace TaskManagerApi.Controllers
             await _storeRepository.Create(Mapper.Map<Store>(request));
         }
 
+        [HttpPost]
+        [Route("BatchCreate")]
+        public async Task BatchCreate(IEnumerable<StoreRequest> request)
+        {
+            await _storeRepository.BatchCreate(Mapper.Map<IEnumerable<Store>>(request));
+        }
+
         [HttpPut]
         [Route("Update")]
         public async Task Update(UpdateStoreRequest request)
         {
             await _storeRepository.Update(Mapper.Map<Store>(request));
+        }
+
+        [HttpPut]
+        [Route("BatchUpdate")]
+        public async Task BatchUpdate(IEnumerable<UpdateStoreRequest> request)
+        {
+            await _storeRepository.BatchUpdate(Mapper.Map<IEnumerable<Store>>(request));
         }
     }
 }

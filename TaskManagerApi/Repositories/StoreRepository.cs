@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using AutoMapper.Internal;
 using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Models;
 
@@ -10,14 +11,15 @@ namespace TaskManagerApi.Repositories
         Task<IEnumerable<Store>> GetAll();
         Task<Store> GetById(int id);
         Task Create(Store entity);
+        Task BatchCreate(IEnumerable<Store> entities);
         Task Update(Store entity);
+        Task BatchUpdate(IEnumerable<Store> entities);
     }
 
     public class StoreRepository : BaseRepository, IStoreRepository
     {
         public StoreRepository(TaskManagerContext context) : base(context)
         {
-
         }
 
         public async Task Create(Store entity)
@@ -27,14 +29,21 @@ namespace TaskManagerApi.Repositories
             await Save();
         }
 
+        public async Task BatchCreate(IEnumerable<Store> entities)
+        {
+            await Context.AddRangeAsync(entities);
+
+            await Save();
+        }
+
         public async Task<IEnumerable<Store>> GetAll()
         {
-            return await Context.Stores.ToListAsync().ConfigureAwait(false);;
+            return await Context.Stores.ToListAsync().ConfigureAwait(false);
         }
 
         public async Task<Store> GetById(int id)
         {
-            return await Context.Stores.FindAsync(id).ConfigureAwait(false);;
+            return await Context.Stores.FindAsync(id).ConfigureAwait(false);
         }
 
         public async Task Update(Store entity)
@@ -43,7 +52,22 @@ namespace TaskManagerApi.Repositories
 
             AddPropertiesToModify(entity, new List<string>
             {
-                nameof(entity.Name),
+                nameof(entity.Name)
+            });
+
+            await Save();
+        }
+
+        public async Task BatchUpdate(IEnumerable<Store> entities)
+        {
+            entities.ForAll(entity =>
+            {
+                Context.Attach(entity);
+
+                AddPropertiesToModify(entity, new List<string>
+                {
+                    nameof(entity.Name)
+                });
             });
 
             await Save();

@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using TaskManagerApp.Models
+@using TaskManagerApp.ApiHelpers
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8"/>
@@ -35,8 +37,8 @@
                     .Name("Menu")
                     .Items(items =>
                     {
-                        //items.Add().Text("Sizes").Action("Index", "Size", new {area = ""});
-                        //items.Add().Text("Pacas").Action("Index", "Bale", new {area = ""});
+                        items.Add().Text(SpanishTitle.Store).Action("Index", ApiControllerName.Store, new { area = "" });
+                        items.Add().Text(SpanishTitle.Status).Action("Index", ApiControllerName.Status, new { area = "" });
                         //items.Add().Text("Categorías").Action("Index", "Category", new {area = ""});
                         //items.Add().Text("Productos").Action("Index", "Product", new {area = ""});
                         //items.Add().Text("Clientes").Action("Index", "Customer", new {area = ""});
