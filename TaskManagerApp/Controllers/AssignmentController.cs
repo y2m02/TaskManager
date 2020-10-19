@@ -41,8 +41,8 @@ namespace TaskManagerApp.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Upsert(AssignmentRequest request)
+        //[ValidateAntiForgeryToken]
+        public async Task<JsonResult> Upsert(AssignmentRequest request)
         {
             if (request.AssignmentId > 0)
             {
@@ -53,7 +53,7 @@ namespace TaskManagerApp.Controllers
                     )
                     .ConfigureAwait(false);
 
-                return RedirectToAction(nameof(Index));
+                return Json("");
             }
 
             await _apiClientService
@@ -63,7 +63,7 @@ namespace TaskManagerApp.Controllers
                 )
                 .ConfigureAwait(false);
 
-            return RedirectToAction(nameof(Index));
+              return Json("");
         }
     }
 }

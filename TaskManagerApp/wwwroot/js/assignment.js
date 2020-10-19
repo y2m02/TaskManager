@@ -48,3 +48,41 @@ function validate() {
 
     return storeIdIsValid && descriptionIsValid;
 }
+
+function createAssignment() {
+    document.body.style.cursor = 'wait';
+
+    if (!validate()) {
+        document.body.style.cursor = 'default';
+        return false;
+    }
+
+    var assignmentId = window.$("#txtAssignmentId").val();
+    var storeId = parseInt(window.$("#cbxStores").val());
+    var description = window.$("#txtDescription").val();
+
+    var assignment = {
+        "AssignmentId": assignmentId == '' ? 0 : parseInt(assignment),
+        "StoreId": storeId,
+        "Description": description
+    }
+
+    window.$.ajax({
+        url: "Assignment/Upsert",
+        data: { request: assignment },
+        type: "POST",
+        content: "application/json;",
+        dataType: "json",
+        success: function (result) {
+            $('#myModalAssignment').modal('toggle');
+            RefreshGrid('Assignments');
+            document.body.style.cursor = 'default';
+        },
+        error: function (errorMessage) {
+            document.body.style.cursor = 'default';
+            alert(errorMessage.responseText);
+        }
+    });
+
+    return true;
+}
