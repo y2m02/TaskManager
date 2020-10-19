@@ -19,7 +19,7 @@ function fillFields(rowData) {
         : "";
 
     window.$("#cbxAssingments").val(assignmentId);
-    //window.$("#txtDate").val(rowData.Date);
+    window.$("#dtpDate").val(rowData.Date);
     window.$("#cbxStatuses").val(statusId);
     window.$("#txtNote").val(rowData.Note);
 }
@@ -27,7 +27,7 @@ function fillFields(rowData) {
 $("#myModalSchedule").on("hidden.bs.modal",
     function() {
         window.$("#cbxAssingments").val("");
-        //window.$("#txtDate").val("");
+        window.$("#dtpDate").val("");
         window.$("#cbxStatuses").val("");
         window.$("#txtNote").val("");
 
@@ -36,10 +36,10 @@ $("#myModalSchedule").on("hidden.bs.modal",
                 'key': "cbxAssingments",
                 'value': "lblAssingmentsError"
             },
-            //{
-            //    'key': "txtDate",
-            //    'value': "lblDateError"
-            //},
+            {
+                'key': "dtpDate",
+                'value': "lblDateError"
+            },
             {
                 'key': "cbxStatuses",
                 'value': "lblStatusesError"
@@ -51,13 +51,13 @@ function isValid() {
     document.body.style.cursor = "wait";
 
     var assignmentIdIsValid = buildError("cbxAssignments", "lblAssignmentsError");
-    //var dateIsValid = buildError("txtDate", "lblDateError");
+    var dateIsValid = buildError("dtpDate", "lblDateError");
     var statusIdIsValid = buildError("cbxStatuses", "lblStatusesError");
 
     document.body.style.cursor = "default";
 
     return assignmentIdIsValid &&
-        //dateIsValid &&
+        dateIsValid &&
         statusIdIsValid;
 }
 
@@ -71,14 +71,14 @@ function createSchedule() {
 
     var scheduleId = window.$("#txtScheduleId").val();
     var assignmentId = window.$("#cbxAssignments").val();
-    //var date = parseInt(window.$("#txtDate").val());
+    var date = parseInt(window.$("#dtpDate").val());
     var statusId = window.$("#cbxStatuses").val();
     var note = window.$("#txtNote").val();
 
     var schedule = {
         "ScheduleId": scheduleId == '' ? 0 : parseInt(scheduleId),
         "AssignmentId": assignmentId,
-        //"Date": date,
+        "Date": date,
         "StatusId": statusId,
         "Note": note
     }

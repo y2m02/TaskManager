@@ -10,71 +10,69 @@
                 @Html.Label("", "Campos con (*) son obligatorios.", new { @class = "text-danger" })
             </div>
             @Html.TextBoxFor(model => model.ScheduleId, new { @class = "form-control", Id = "txtScheduleId", hidden = true })
-        <div class="modal-body">
-            <div class="form-group">
-                <div class="fieldNameAlign">
-                    @Html.LabelFor(model => model.AssignmentId) @Html.Label("", "*", new { @class = "text-danger" })
-                </div>
-                <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">
-                            <i class="fas fa-box"
-                               aria-hidden="true">
-                            </i>
-                        </span>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="fieldNameAlign">
+                        @Html.LabelFor(model => model.AssignmentId) @Html.Label("", "*", new { @class = "text-danger" })
                     </div>
-                    @Html.DropDownListFor(model => model.AssignmentId, new SelectList(ViewBag.Assignments, "ItemId", "Description"), "Elija una opción", new { @class = "form-control", Id = "cbxAssignments", onchange = "removeErrorMessage('cbxAssignments','lblAssignmentsError')" })
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-box"
+                                   aria-hidden="true">
+                                </i>
+                            </span>
+                        </div>
+                        @Html.DropDownListFor(model => model.AssignmentId, new SelectList(ViewBag.Assignments, "ItemId", "Description"), "Elija una opción", new { @class = "form-control", Id = "cbxAssignments", onchange = "removeErrorMessage('cbxAssignments','lblAssignmentsError')" })
+                    </div>
+                    <span id="lblAssignmentsError" class="text-danger"></span>
                 </div>
-                <span id="lblAssignmentsError" class="text-danger"></span>
+                <div class="form-group">
+                    <div class="fieldNameAlign">
+                        @Html.LabelFor(model => model.Date) @Html.Label("", "*", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-group mb-2 mr-sm-2">
+                        @(Html.Kendo().DatePicker()
+                          .Name("dtpDate")
+                          .Format("dd/MM/yyyy")
+                          .WeekNumber()
+                          .HtmlAttributes(new { Id = "dtpDate", style = "width: 100%", onchange = "removeErrorMessage('dtpDate','lblDateError')" })
+                        )
+                    </div>
+                    <span id="lblDateError" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="fieldNameAlign">
+                        @Html.LabelFor(model => model.StatusId) @Html.Label("", "*", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-box"
+                                   aria-hidden="true">
+                                </i>
+                            </span>
+                        </div>
+                        @Html.DropDownListFor(model => model.StatusId, new SelectList(ViewBag.Statuses, "ItemId", "Description"), "Elija una opción", new { @class = "form-control", Id = "cbxStatuses", onchange = "removeErrorMessage('cbxStatuses','lblStatusesError')" })
+                    </div>
+                    <span id="lblStatusesError" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <div class="fieldNameAlign">
+                        @Html.LabelFor(model => model.Note)
+                    </div>
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="fas fa-pen-alt"
+                                   aria-hidden="true">
+                                </i>
+                            </span>
+                        </div>
+                        @Html.TextBoxFor(model => model.Note, new { @class = "form-control", Id = "txtNote" })
+                    </div>
+                </div>
             </div>
-            @*<div class="form-group">
-                <div class="fieldNameAlign">
-                    @Html.LabelFor(model => model.Date) @Html.Label("", "*", new { @class = "text-danger" })
-                </div>
-                <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">
-                            <i class="fas fa-box"
-                               aria-hidden="true">
-                            </i>
-                        </span>
-                    </div>
-                    @Html.TextBoxFor(model => model.Date, new { @class = "form-control", Id = "txtDate", oninput = "removeErrorMessage('txtDate','lblDateError')" })
-                </div>
-                <span id="lblDateError" class="text-danger"></span>
-            </div>*@
-            <div class="form-group">
-                <div class="fieldNameAlign">
-                    @Html.LabelFor(model => model.StatusId) @Html.Label("", "*", new { @class = "text-danger" })
-                </div>
-                <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">
-                            <i class="fas fa-box"
-                               aria-hidden="true">
-                            </i>
-                        </span>
-                    </div>
-                    @Html.DropDownListFor(model => model.StatusId, new SelectList(ViewBag.Statuses, "ItemId", "Description"), "Elija una opción", new { @class = "form-control", Id = "cbxStatuses", onchange = "removeErrorMessage('cbxStatuses','lblStatusesError')" })
-                </div>
-                <span id="lblStatusesError" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <div class="fieldNameAlign">
-                    @Html.LabelFor(model => model.Note) 
-                </div>
-                <div class="input-group mb-2 mr-sm-2">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">
-                            <i class="fas fa-pen-alt"
-                               aria-hidden="true">
-                            </i>
-                        </span>
-                    </div>
-                    @Html.TextBoxFor(model => model.Note, new { @class = "form-control", Id = "txtNote" })
-                </div>
-            </div>
-        </div>
             <div class="modal-footer">
                 <input type="button" value="Guardar" class="btn btn-primary" id="btnUpsert" onclick="return createSchedule();" />
                 <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
