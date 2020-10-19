@@ -11,23 +11,25 @@ using TaskManagerApp.Models.ViewModels;
 
 namespace TaskManagerApp.Controllers
 {
-    public class AssignmentController : Controller
+    public class ScheduleController : Controller
     {
         private readonly IApiClientService _apiClientService;
 
-        public AssignmentController(IApiClientService apiClientService)
+        public ScheduleController(IApiClientService apiClientService)
         {
             _apiClientService = apiClientService;
         }
 
         public async Task<IActionResult> Index()
         {
-            ViewBag.Stores = await _apiClientService
+            var itemTypes = await _apiClientService
                 .Post<IEnumerable<ItemTypeResponse>>(
                 ApiPath.Get(ApiControllerName.ItemType),
                 new List<ItemType> { ItemType.Store }
             )
-            .ConfigureAwait(false);
+                        .ConfigureAwait(false);
+
+            ViewBag.Stores = enumerable;
 
             return View();
         }
@@ -35,35 +37,35 @@ namespace TaskManagerApp.Controllers
         public async Task<JsonResult> GetAll([DataSourceRequest] DataSourceRequest request)
         {
             var response = await _apiClientService
-                .Get<IEnumerable<AssignmentViewModel>>(ApiPath.Get(ApiControllerName.Assignment))
+                .Get<IEnumerable<ScheduleViewModel>>(ApiPath.Get(ApiControllerName.Schedule))
                 .ConfigureAwait(false);
 
             return Json(await response.ToDataSourceResultAsync(request));
         }
 
         [HttpPost]
-        public async Task<JsonResult> Upsert(AssignmentRequest request)
+        public async Task<JsonResult> Upsert(ScheduleRequest request)
         {
-            if (request.AssignmentId > 0)
+            if (request.ScheduleId > 0)
             {
                 await _apiClientService
-                    .Put<AssignmentRequest>(
-                        ApiPath.Update(ApiControllerName.Assignment),
+                    .Put<ScheduleRequest>(
+                        ApiPath.Update(ApiControllerName.Schedule),
                         request
                     )
                     .ConfigureAwait(false);
 
-                return Json("");
+                return Json("updated");
             }
 
             await _apiClientService
-                .Post<AssignmentRequest>(
-                    ApiPath.Create(ApiControllerName.Assignment),
+                .Post<ScheduleRequest>(
+                    ApiPath.Create(ApiControllerName.Schedule),
                     request
                 )
                 .ConfigureAwait(false);
 
-              return Json("");
+              return Json("created");
         }
     }
 }
