@@ -1,5 +1,56 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model TaskManagerApp.Models.ViewModels.AssignmentRequest
+
+<div class="modal fade" id="myModalAssignment" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @using (Html.BeginForm("Upsert", "Assignment", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel">Crear - Editar</h4>
+                </div>
+                <div class="requiredFields">
+                    @Html.Label("", "Campos con (*) son obligatorios.", new { @class = "text-danger" })
+                </div>
+                @Html.TextBoxFor(model => model.AssignmentId, new { @class = "form-control", Id = "txtAssignmentId", hidden = true })
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="fieldNameAlign">
+                            @Html.LabelFor(model => model.StoreId) @Html.Label("", "*", new { @class = "text-danger" })
+                        </div>
+                        <div class="input-group mb-2 mr-sm-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fas fa-box"
+                                       aria-hidden="true">
+                                    </i>
+                                </span>
+                            </div>
+                            @Html.DropDownListFor(model => model.StoreId, new SelectList(ViewBag.Stores, "ItemId", "Description"), "Elija una opción", new { @class = "form-control", Id = "cbxStores", onchange = "removeErrorMessage('cbxStores','lblStoresError')" })
+                        </div>
+                        <span id="lblStoresError" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <div class="fieldNameAlign">
+                            @Html.LabelFor(model => model.Description) @Html.Label("", "*", new { @class = "text-danger" })
+                        </div>
+                        <div class="input-group mb-2 mr-sm-2">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text" id="basic-addon1">
+                                    <i class="fas fa-pen-alt"
+                                       aria-hidden="true">
+                                    </i>
+                                </span>
+                            </div>
+                            @Html.TextBoxFor(model => model.Description, new { @class = "form-control", Id = "txtDescription", oninput = "removeErrorMessage('txtDescription','lblDescriptionError')" })
+                        </div>
+                        <span id="lblDescriptionError" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <input type="submit" value="Guardar" class="btn btn-primary" id="btnUpsert" onclick="return validate();" />
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                </div>
+            }
+        </div>
+    </div>
+</div>

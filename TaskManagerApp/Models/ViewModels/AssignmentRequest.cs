@@ -2,7 +2,7 @@
 
 namespace TaskManagerApp.Models.ViewModels
 {
-    public class CreateAssignmentRequest
+    public class AssignmentRequest
     {
         public int AssignmentId { get; set; }
 
@@ -11,8 +11,5 @@ namespace TaskManagerApp.Models.ViewModels
 
         [DisplayName("Tienda")]
         public int StoreId { get; set; }
-
-        [DisplayName("Estado")]
-        public int StatusId { get; set; }
     }
 }
