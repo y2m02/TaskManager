@@ -12,19 +12,19 @@ namespace TaskManagerApp.ApiHelpers
     {
         private const string BaseApiUrl = "http://taskmanagerapi.com/api/";
 
-        public async Task<TResponse> Get<TResponse>(string path)
+        public static async Task<TResponse> Get<TResponse>(string path)
         {
             return await Execute<TResponse>(PrepareRequest(HttpMethod.Get, path)).ConfigureAwait(false);
         }
 
-        public async Task<TResponse> Post<TResponse>(string path, object body = null)
+        public static async Task Post<TResponse>(string path, object body = null)
         {
-            return await SetRequest<TResponse>(HttpMethod.Post, path, body).ConfigureAwait(false);
+            await SetRequest<TResponse>(HttpMethod.Post, path, body).ConfigureAwait(false);
         }
 
-        public async Task<TResponse> Put<TResponse>(string path, object body = null)
+        public static async Task Put<TResponse>(string path, object body = null)
         {
-            return await SetRequest<TResponse>(HttpMethod.Put, path, body).ConfigureAwait(false);
+            await SetRequest<TResponse>(HttpMethod.Put, path, body).ConfigureAwait(false);
         }
 
         public async Task<TResponse> Delete<TResponse>(string path)
@@ -32,13 +32,13 @@ namespace TaskManagerApp.ApiHelpers
             return await Execute<TResponse>(PrepareRequest(HttpMethod.Delete, path)).ConfigureAwait(false);
         }
 
-        private async Task<TResponse> SetRequest<TResponse>(HttpMethod method, string path, object body = null)
+        private static async Task SetRequest<TResponse>(HttpMethod method, string path, object body = null)
         {
             var request = PrepareRequest(method, path);
 
             AddContent(request, body);
 
-            return await Execute<TResponse>(request).ConfigureAwait(false);
+            await Execute<TResponse>(request).ConfigureAwait(false);
         }
 
         private static void AddContent(HttpRequestMessage request, object body)

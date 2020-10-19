@@ -17,8 +17,7 @@ namespace TaskManagerApp.Controllers
 
         public async Task<JsonResult> GetAll([DataSourceRequest] DataSourceRequest request)
         {
-            var response = await GetApiClient()
-                .Get<IEnumerable<StatusViewModel>>(ApiPath.Get(ApiControllerName.Status))
+            var response = await ApiClient.Get<IEnumerable<StatusViewModel>>(ApiPath.Get(ApiControllerName.Status))
                 .ConfigureAwait(false);
 
             return Json(await response.ToDataSourceResultAsync(request));
@@ -30,7 +29,7 @@ namespace TaskManagerApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                await GetApiClient().Post<object>(
+                await ApiClient.Post<object>(
                     ApiPath.BatchCreate(ApiControllerName.Status), 
                     statuses
                 );
@@ -45,7 +44,7 @@ namespace TaskManagerApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                await GetApiClient().Put<object>(
+                await ApiClient.Put<object>(
                     ApiPath.BatchUpdate(ApiControllerName.Status), 
                     statuses
                 );
