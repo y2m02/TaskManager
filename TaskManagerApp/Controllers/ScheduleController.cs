@@ -2,6 +2,7 @@
 using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using TaskManagerApi.Models.Responses;
 using TaskManagerApp.ApiHelpers;
@@ -25,11 +26,12 @@ namespace TaskManagerApp.Controllers
             var itemTypes = await _apiClientService
                 .Post<IEnumerable<ItemTypeResponse>>(
                 ApiPath.Get(ApiControllerName.ItemType),
-                new List<ItemType> { ItemType.Store }
+                new List<ItemType> { ItemType.Assignment, ItemType.Status }
             )
-                        .ConfigureAwait(false);
+            .ConfigureAwait(false);
 
-            ViewBag.Stores = enumerable;
+            ViewBag.Assignments = itemTypes.Where(w => w.Type == ItemType.Assignment);
+            ViewBag.Statuses = itemTypes.Where(w => w.Type == ItemType.Status);
 
             return View();
         }
@@ -65,7 +67,7 @@ namespace TaskManagerApp.Controllers
                 )
                 .ConfigureAwait(false);
 
-              return Json("created");
+            return Json("created");
         }
     }
 }

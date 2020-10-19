@@ -1,0 +1,110 @@
+﻿@using Kendo.Mvc
+@using TaskManagerApp.Models
+@using TaskManagerApp.Models.ViewModels
+@{
+    ViewData["Title"] = SpanishTitle.Schedule;
+}
+
+<h1>@SpanishTitle.Schedule</h1>
+<div>
+    <div>
+        <button id="openModal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalSchedule">
+            <i class="fas fa-plus"
+               aria-hidden="true">
+            </i>
+            Crear
+        </button>
+        <br />
+        <br />
+    </div>
+    @await Html.PartialAsync("CreatePartial")
+    <div>
+        @(Html.Kendo().Grid<ScheduleViewModel>()
+            .Name("Schedules")
+            .Columns(columns =>
+            {
+                columns.Bound(c => c.ScheduleId).Hidden();
+                columns.Bound(c => c.AssignmentDescription).Width(200).Groupable(false);
+                columns.Bound(c => c.StoreName).Width(100)
+                    .Filterable(ftb => ftb
+                        .Multi(true)
+                        .CheckAll(false)
+                        .Messages(msg => msg
+                            .SelectedItemsFormat("{0} opciones seleccionadas"))
+                    );
+                columns.Bound(c => c.StatusDescription).Width(100)
+                    .Filterable(ftb => ftb
+                        .Multi(true)
+                        .CheckAll(false)
+                        .Messages(msg => msg
+                            .SelectedItemsFormat("{0} opciones seleccionadas"))
+                        );
+                columns.Bound(c => c.Date).Width(90);
+                columns.Bound(c => c.Note).Width(90).Groupable(false);
+                columns.Command(command => command.Custom("Editar").HtmlAttributes(new Dictionary<string, object> {["class"] = "editButton"})).Width(80);
+            })
+            .Resizable(c => c.Columns(true))
+            .Pageable(pageable => pageable
+                .Refresh(true)
+                .PageSizes(new[] {20, 35, 50})
+                .Messages(msg => msg
+                    .Empty("Sin registros")
+                    .ItemsPerPage("registros por página")
+                    .First("Ir a la primera página")
+                    .Last("Ir a la última página")
+                    .Next("Página siguiente")
+                    .Previous("Página anterior")
+                    .Refresh("Refrescar")
+                    .Display("{0} - {1} de {2} registros")
+                    .Page("Página")
+                    .MorePages("Más páginas")))
+            .Navigatable()
+            .Sortable()
+            .Groupable(g => g
+                .Messages(m => m.Empty("Arrastre una columna hasta aquí para agrupar por dicha columna")))
+            .Filterable(filterable => filterable
+                .Extra(true)
+                .Operators(op =>
+                    op.ForString(str => str.Clear()
+                        .Contains("Contiene")
+                        .DoesNotContain("No contiene")
+                        .IsEqualTo("Es igual a")
+                        .IsNotEqualTo("Es diferente de")
+                        .StartsWith("Comienza con")
+                        .EndsWith("Termina con"))
+                        .ForDate(date => date.Clear()
+                            .IsEqualTo("Es igual a")
+                            .IsNotEqualTo("Es diferente de")
+                            .IsGreaterThanOrEqualTo("Mayor o igual que")
+                            .IsGreaterThan("Despúes de")
+                            .IsLessThanOrEqualTo("Hasta")
+                            .IsLessThan("Antes de"))
+                        .ForNumber(num => num.Clear()
+                            .IsEqualTo("Es igual a")
+                            .IsNotEqualTo("Es diferente de")
+                            .IsGreaterThanOrEqualTo("Mayor o igual que")
+                            .IsGreaterThan("Mayor que")
+                            .IsLessThanOrEqualTo("Menor o igual que")
+                            .IsLessThan("Menor que")))
+                .Messages(msg => msg
+                    .Info("Mostrar registros con valor que:")
+                    .And("Y")
+                    .Or("O")
+                    .Filter("Filtrar")
+                    .Clear("Limpiar")))
+            .Scrollable(s => s.Height(700))
+            .DataSource(dataSource => dataSource
+                .Ajax()
+                .PageSize(20)
+                .ServerOperation(false)
+                .Sort(s => s.Add("StatusDescription").Ascending())
+                .Model(model => model.Id(p => p.ScheduleId))
+                .Read(read => read.Action("GetAll", "Schedule"))
+            .Group(group => group.Add("Date", typeof(string), ListSortDirection.Ascending))
+            .Group(group => group.Add("StatusDescription", typeof(string), ListSortDirection.Ascending))
+            .Group(group => group.Add("StoreName", typeof(string), ListSortDirection.Ascending))
+            ))
+    </div>
+</div>
+
+<script src="~/js/schedule.js"></script>

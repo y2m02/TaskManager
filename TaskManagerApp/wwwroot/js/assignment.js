@@ -38,7 +38,7 @@ $("#myModalAssignment").on("hidden.bs.modal",
         ]);
     });
 
-function validate() {
+function isValid() {
     document.body.style.cursor = "wait";
 
     var storeIdIsValid = buildError("cbxStores", "lblStoresError");
@@ -52,7 +52,7 @@ function validate() {
 function createAssignment() {
     document.body.style.cursor = 'wait';
 
-    if (!validate()) {
+    if (!isValid()) {
         document.body.style.cursor = 'default';
         return false;
     }

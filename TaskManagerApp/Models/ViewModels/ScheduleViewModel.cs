@@ -15,6 +15,9 @@ namespace TaskManagerApp.Models.ViewModels
         [DisplayName("Tarea")]
         public string AssignmentDescription { get; set; }
 
+        [DisplayName("StoreName")]
+        public string StoreName { get; set; }
+
         public int StatusId { get; set; }
 
         [DisplayName("Estado")]

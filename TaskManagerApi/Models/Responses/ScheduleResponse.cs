@@ -12,6 +12,8 @@ namespace TaskManagerApi.Models.Responses
 
         public string AssignmentDescription { get; set; }
 
+        public string StoreName { get; set; }
+
         public int StatusId { get; set; }
 
         public string StatusDescription { get; set; }

@@ -34,6 +34,8 @@ namespace TaskManagerApi.Mappings
             CreateMap<Schedule, ScheduleResponse>()
                 .ForMember(destination => destination.AssignmentDescription,
                     member => member.MapFrom(field => field.Assignment.Description))
+                .ForMember(destination => destination.StoreName,
+                    member => member.MapFrom(field => field.Assignment.Store.Name))
                 .ForMember(destination => destination.StatusDescription,
                     member => member.MapFrom(field => field.Status.Description));
             CreateMap<ScheduleRequest, Schedule>();

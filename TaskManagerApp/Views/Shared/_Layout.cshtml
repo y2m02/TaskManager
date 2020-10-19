@@ -40,13 +40,9 @@
                         items.Add().Text(SpanishTitle.Store).Action("Index", ApiControllerName.Store, new { area = "" });
                         items.Add().Text(SpanishTitle.Assignment).Action("Index", ApiControllerName.Assignment, new { area = "" });
                         items.Add().Text(SpanishTitle.Status).Action("Index", ApiControllerName.Status, new { area = "" });
-                        //items.Add().Text("Categorías").Action("Index", "Category", new { area = "" });
-                        //items.Add().Text("Productos").Action("Index", "Product", new {area = ""});
-                        //items.Add().Text("Clientes").Action("Index", "Customer", new {area = ""});
-                        //items.Add().Text("Órdenes").Action("Index", "Order", new {area = ""});
-                        //items.Add().Text("Ganancias").Action("Index", "EarningReport", new {area = ""});
+                        items.Add().Text(SpanishTitle.Schedule).Action("Index", ApiControllerName.Schedule, new { area = "" });
                     })
-                    )
+                )
             </kendo-responsivepanel>
         </div>
     </div>
