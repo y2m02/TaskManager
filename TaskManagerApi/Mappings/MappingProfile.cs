@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using TaskManagerApi.Models;
 using TaskManagerApi.Models.Enums;
 using TaskManagerApi.Models.Requests.Assignments;
@@ -38,8 +39,12 @@ namespace TaskManagerApi.Mappings
                     member => member.MapFrom(field => field.Assignment.Store.Name))
                 .ForMember(destination => destination.StatusDescription,
                     member => member.MapFrom(field => field.Status.Description));
-            CreateMap<ScheduleRequest, Schedule>();
-            CreateMap<UpdateScheduleRequest, Schedule>();
+            CreateMap<ScheduleRequest, Schedule>()
+                .ForMember(destination => destination.Date,
+                    member => member.MapFrom(field => Convert.ToDateTime(field.Date.ToString("MMM/dd/yyyy"))));
+            CreateMap<UpdateScheduleRequest, Schedule>()
+                .ForMember(destination => destination.Date,
+                    member => member.MapFrom(field => Convert.ToDateTime(field.Date.ToString("MMM/dd/yyyy"))));
 
             CreateMap<Store, ItemTypeResponse>()
                 .ForMember(destination => destination.ItemId,

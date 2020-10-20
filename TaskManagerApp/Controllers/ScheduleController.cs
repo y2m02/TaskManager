@@ -27,11 +27,11 @@ namespace TaskManagerApp.Controllers
             var itemTypes = await _apiClientService
                 .Post<List<ItemTypeResponse>>(
                 ApiPath.Get(ApiControllerName.ItemType),
-                new List<ItemType> { ItemType.Assignment, ItemType.Status }
+                new List<ItemType> { ItemType.Status }
             )
             .ConfigureAwait(false);
 
-            ViewBag.Assignments = itemTypes.Where(w => w.Type == ItemType.Assignment);
+            ViewBag.Assignments = new List<ItemTypeResponse>();
             ViewBag.Statuses = itemTypes.Where(w => w.Type == ItemType.Status);
 
             return View();
@@ -49,11 +49,6 @@ namespace TaskManagerApp.Controllers
         [HttpPost]
         public async Task<JsonResult> Upsert(ScheduleRequest request)
         {
-            var c = DateTime.ParseExact(request.Date.ToShortDateString(), "dd/MM/yyyy", System.Globalization.CultureInfo.InvariantCulture)
-                .ToString("MM/dd/yyyy",System.Globalization.CultureInfo.InvariantCulture);
-
-            request.Date = Convert.ToDateTime(request.Date.ToString("MM/dd/yyyy"));
-
             if (request.ScheduleId > 0)
             {
                 await _apiClientService

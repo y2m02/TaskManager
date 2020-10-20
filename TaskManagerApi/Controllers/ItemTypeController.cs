@@ -8,8 +8,6 @@ using TaskManagerApi.Models.Enums;
 using TaskManagerApi.Models.Responses;
 using TaskManagerApi.Repositories;
 
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-
 namespace TaskManagerApi.Controllers
 {
     public class ItemTypeController : BaseApiController
@@ -43,7 +41,7 @@ namespace TaskManagerApi.Controllers
 
             if (types.Contains(ItemType.Assignment))
             {
-                itemTypes.AddRange(Mapper.Map<IEnumerable<ItemTypeResponse>>(await _assignmentRepository.GetAll()));
+                itemTypes.AddRange(Mapper.Map<IEnumerable<ItemTypeResponse>>(await _assignmentRepository.GetAllForDropDownList()));
             }
 
             if (types.Contains(ItemType.Status))

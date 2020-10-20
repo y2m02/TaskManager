@@ -3,8 +3,10 @@
     public static class ApiPath
     {
         public static string Get(string controller) => $"{controller}/Get";
-
+        
         public static string Get(string controller, int id) => $"{controller}/Get/{id}";
+        
+        public static string GetDropDownList(string controller, int id) => $"{controller}/GetAllForDropDownList/{id}";
 
         public static string Create(string controller) => $"{controller}/Create";
 
