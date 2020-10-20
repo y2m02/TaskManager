@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel;
 
-namespace TaskManagerApp.Models.ViewModels
+namespace TaskManagerApp.Models.Requests
 {
     public class AssignmentRequest
     {

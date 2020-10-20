@@ -59,7 +59,7 @@ namespace TaskManagerApp
             {
                 endpoints.MapControllerRoute(
                     "default",
-                    "{controller=Store}/{action=Index}/{id?}");
+                    "{controller=Schedule}/{action=Index}/{id?}");
             });
         }
     }

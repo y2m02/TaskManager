@@ -1,23 +1,22 @@
 ﻿using System;
+using System.ComponentModel;
 
-namespace TaskManagerApi.Models.Responses
+namespace TaskManagerApp.Models.Requests
 {
-    public class ScheduleResponse
+    public class ScheduleRequest
     {
         public int ScheduleId { get; set; }
 
+        [DisplayName("Fecha")]
         public DateTime Date { get; set; }
 
+        [DisplayName("Tarea")]
         public int AssignmentId { get; set; }
 
-        public string AssignmentDescription { get; set; }
-
-        public string StoreName { get; set; }
-
+        [DisplayName("Estado")]
         public int StatusId { get; set; }
 
-        public string StatusDescription { get; set; }
-
+        [DisplayName("Nota")]
         public string Note { get; set; }
     }
 }

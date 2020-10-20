@@ -1,6 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Models;
 
 namespace TaskManagerApi.Repositories
@@ -32,6 +32,7 @@ namespace TaskManagerApi.Repositories
             return await Context.Schedules
                 .Include(w => w.Status)
                 .Include(w => w.Assignment)
+                .ThenInclude(w => w.Store)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -41,6 +42,7 @@ namespace TaskManagerApi.Repositories
             return await Context.Schedules
                 .Include(w => w.Status)
                 .Include(w => w.Assignment)
+                .ThenInclude(w => w.Store)
                 .SingleAsync(w => w.ScheduleId == id)
                 .ConfigureAwait(false);
         }
