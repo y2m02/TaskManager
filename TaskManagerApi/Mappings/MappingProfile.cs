@@ -28,7 +28,6 @@ namespace TaskManagerApi.Mappings
                 .ForMember(destination => destination.StatusDescription,
                     member => member.MapFrom(field =>
                         field.Schedule == null ? "Pendiente" : field.Schedule.Status.Description));
-            CreateMap<Assignment, AssignmentForDropDownListResponse>();
             CreateMap<AssignmentRequest, Assignment>();
             CreateMap<UpdateAssignmentRequest, Assignment>();
 
@@ -58,7 +57,7 @@ namespace TaskManagerApi.Mappings
                 .ForMember(destination => destination.ItemId,
                     member => member.MapFrom(field => field.AssignmentId))
                 .ForMember(destination => destination.Description,
-                    member => member.MapFrom(field => field.Description))
+                    member => member.MapFrom(field => $"{field.Store.Name.ToUpper()} - {field.Description}"))
                 .ForMember(destination => destination.Type,
                     member => member.MapFrom(field => ItemType.Assignment));
 

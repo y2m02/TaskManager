@@ -38,17 +38,10 @@ namespace TaskManagerApi.Repositories
                 .ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Assignment>> GetAllForDropDownList()
-        {
-            return await Context.Assignments
-                .Where(w => w.Schedule == null)
-                .ToListAsync()
-                .ConfigureAwait(false);
-        }
-
         public async Task<IEnumerable<Assignment>> GetAllForDropDownList(int id)
         {
             return await Context.Assignments
+                .Include(w => w.Store)
                 .Where(w => w.Schedule == null ||
                     w.Schedule != null && 
                     w.AssignmentId == id

@@ -80,7 +80,7 @@
         .ServerOperation(false)
         .Events(events => events.RequestEnd("onRequestEnd"))
         .Model(model => model.Id(p => p.StatusId))
-        .Sort(s => s.Add("Description").Ascending())
+        .Sort(s => s.Add("Description").Descending())
         .Read(read => read.Action("GetAll", "Status"))
     .Create(create => create.Action("BatchCreate", "Status"))
     .Update(update => update.Action("BatchUpdate", "Status"))

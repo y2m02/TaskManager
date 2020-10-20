@@ -99,7 +99,7 @@
                 .Ajax()
                 .PageSize(20)
                 .ServerOperation(false)
-                .Sort(s => s.Add("StatusDescription").Ascending())
+                .Sort(s => s.Add("StatusDescription").Descending())
                 .Model(model => model.Id(p => p.ScheduleId))
                 .Read(read => read.Action("GetAll", "Schedule"))
             .Group(group => group.Add("StatusDescription", typeof(string), ListSortDirection.Ascending))
