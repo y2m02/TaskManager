@@ -40,6 +40,15 @@ namespace TaskManagerApp.Controllers
 
             return Json(await response.ToDataSourceResultAsync(request));
         }
+        
+        public async Task<JsonResult> GetAllForDropDownList(int id)
+        {
+            var response = await _apiClientService
+                .Get<IEnumerable<ItemTypeResponse>>(ApiPath.GetDropDownList(ApiControllerName.Assignment, id))
+                .ConfigureAwait(false);
+
+            return Json(response);
+        }
 
         [HttpPost]
         public async Task<JsonResult> Upsert(AssignmentRequest request)

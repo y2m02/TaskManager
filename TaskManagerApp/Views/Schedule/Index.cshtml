@@ -8,7 +8,7 @@
 <h1>@SpanishTitle.Schedule</h1>
 <div>
     <div>
-        <button id="openModal" type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModalSchedule">
+        <button id="btnOpenModal" type="button" class="btn btn-primary" @*data-toggle="modal" data-target="#myModalSchedule"*@>
             <i class="fas fa-plus"
                aria-hidden="true">
             </i>
@@ -39,7 +39,7 @@
                         .Messages(msg => msg
                             .SelectedItemsFormat("{0} opciones seleccionadas"))
                         );
-                columns.Bound(c => c.Date).Width(90);
+                columns.Bound(c => c.Date).Width(90).Format("{0:dd/MM/yyyy}");
                 columns.Bound(c => c.Note).Width(90).Groupable(false);
                 columns.Command(command => command.Custom("Editar").HtmlAttributes(new Dictionary<string, object> {["class"] = "editButton"})).Width(80);
             })
