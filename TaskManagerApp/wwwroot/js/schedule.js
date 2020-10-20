@@ -10,7 +10,7 @@
     });
 
 function fillFields(rowData) {
-    var assignmentId = checkIfValueExists("cbxAssingments", rowData.AssignmentId)
+    var assignmentId = checkIfValueExists("cbxAssignments", rowData.AssignmentId)
         ? rowData.AssignmentId
         : "";
 
@@ -18,22 +18,22 @@ function fillFields(rowData) {
         ? rowData.StatusId
         : "";
 
-    window.$("#cbxAssingments").val(assignmentId);
-    window.$("#dtpDate").val(rowData.Date);
+    window.$("#cbxAssignments").val(assignmentId);
+    window.$("#dtpDate").data("kendoDatePicker").value(rowData.Date);
     window.$("#cbxStatuses").val(statusId);
     window.$("#txtNote").val(rowData.Note);
 }
 
 $("#myModalSchedule").on("hidden.bs.modal",
     function() {
-        window.$("#cbxAssingments").val("");
-        window.$("#dtpDate").val("");
+        window.$("#cbxAssignments").val("");
+        window.$("#dtpDate").data("kendoDatePicker").value("");
         window.$("#cbxStatuses").val("");
         window.$("#txtNote").val("");
 
         clearErrorMessage([
             {
-                'key': "cbxAssingments",
+                'key': "cbxAssignments",
                 'value': "lblAssingmentsError"
             },
             {
@@ -70,9 +70,9 @@ function createSchedule() {
     }
 
     var scheduleId = window.$("#txtScheduleId").val();
-    var assignmentId = window.$("#cbxAssignments").val();
-    var date = parseInt(window.$("#dtpDate").val());
-    var statusId = window.$("#cbxStatuses").val();
+    var assignmentId = parseInt(window.$("#cbxAssignments").val());
+    var date = window.$("#dtpDate").data("kendoDatePicker").value().toDateString();
+    var statusId = parseInt(window.$("#cbxStatuses").val());
     var note = window.$("#txtNote").val();
 
     var schedule = {
