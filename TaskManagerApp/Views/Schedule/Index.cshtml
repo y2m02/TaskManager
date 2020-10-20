@@ -24,8 +24,8 @@
             .Columns(columns =>
             {
                 columns.Bound(c => c.ScheduleId).Hidden();
-                columns.Bound(c => c.AssignmentDescription).Width(200).Groupable(false);
-                columns.Bound(c => c.StoreName).Width(100)
+                columns.Bound(c => c.AssignmentDescription).Width(220).Groupable(false);
+                columns.Bound(c => c.StoreName).Width(150)
                     .Filterable(ftb => ftb
                         .Multi(true)
                         .CheckAll(false)
@@ -38,9 +38,11 @@
                         .CheckAll(false)
                         .Messages(msg => msg
                             .SelectedItemsFormat("{0} opciones seleccionadas"))
-                        );
+                        )
+                    .ClientTemplate(@"<img src='images/statuses/#= StatusDescription #.png' class='rounded-circle' height='40' width='40' asp-append-version='true'/><div class='status-description'>#: StatusDescription #</div>")
+                    .Width(150);
                 columns.Bound(c => c.Date).Width(90).Format("{0:dd/MM/yyyy}");
-                columns.Bound(c => c.Note).Width(90).Groupable(false);
+                columns.Bound(c => c.Note).Width(100).Groupable(false);
                 columns.Command(command => command.Custom("Editar").HtmlAttributes(new Dictionary<string, object> {["class"] = "editButton"})).Width(80);
             })
             .Resizable(c => c.Columns(true))
@@ -100,8 +102,8 @@
                 .Sort(s => s.Add("StatusDescription").Ascending())
                 .Model(model => model.Id(p => p.ScheduleId))
                 .Read(read => read.Action("GetAll", "Schedule"))
-            .Group(group => group.Add("Date", typeof(string), ListSortDirection.Ascending))
             .Group(group => group.Add("StatusDescription", typeof(string), ListSortDirection.Ascending))
+            .Group(group => group.Add("Date", typeof(string), ListSortDirection.Ascending))
             .Group(group => group.Add("StoreName", typeof(string), ListSortDirection.Ascending))
             ))
     </div>
