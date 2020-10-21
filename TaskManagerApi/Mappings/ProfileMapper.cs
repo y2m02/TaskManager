@@ -10,16 +10,20 @@ using TaskManagerApi.Models.Responses;
 
 namespace TaskManagerApi.Mappings
 {
-    public class MappingProfile : Profile
+    public class ProfileMapper : Profile
     {
-        public MappingProfile()
+        public ProfileMapper()
         {
-            CreateMap<Store, StoreResponse>();
+            CreateMap<Store, StoreResponse>()
+                .ForMember(destination => destination.Used,
+                    member => member.MapFrom(field => field.Assignments.Count > 0));
             CreateMap<StoreRequest, Store>();
             CreateMap<UpdateStoreRequest, Store>();
             CreateMap<DeleteStoreRequest, Store>();
 
-            CreateMap<Status, StatusResponse>();
+            CreateMap<Status, StatusResponse>()
+                .ForMember(destination => destination.Used,
+                    member => member.MapFrom(field => field.Schedules.Count > 0));
             CreateMap<StatusRequest, Status>();
             CreateMap<UpdateStatusRequest, Status>();
 
@@ -28,7 +32,9 @@ namespace TaskManagerApi.Mappings
                     member => member.MapFrom(field => field.Store.Name))
                 .ForMember(destination => destination.StatusDescription,
                     member => member.MapFrom(field =>
-                        field.Schedule == null ? "Pendiente" : field.Schedule.Status.Description));
+                        field.Schedule == null ? "Pendiente" : field.Schedule.Status.Description))
+                .ForMember(destination => destination.Used,
+                    member => member.MapFrom(field => field.Schedule != null));
             CreateMap<AssignmentRequest, Assignment>();
             CreateMap<UpdateAssignmentRequest, Assignment>();
 

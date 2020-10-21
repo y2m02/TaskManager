@@ -38,7 +38,10 @@ namespace TaskManagerApi.Repositories
 
         public async Task<IEnumerable<Status>> GetAll()
         {
-            return await Context.Statuses.ToListAsync().ConfigureAwait(false);
+            return await Context.Statuses
+                .Include(w => w.Schedules)
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task<Status> GetById(int id)

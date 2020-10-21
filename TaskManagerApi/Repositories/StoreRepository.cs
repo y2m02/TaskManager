@@ -40,7 +40,10 @@ namespace TaskManagerApi.Repositories
 
         public async Task<IEnumerable<Store>> GetAll()
         {
-            return await Context.Stores.ToListAsync().ConfigureAwait(false);
+            return await Context.Stores
+                .Include(w => w.Assignments)
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task<Store> GetById(int id)

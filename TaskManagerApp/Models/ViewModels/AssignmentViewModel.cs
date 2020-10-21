@@ -18,5 +18,7 @@ namespace TaskManagerApp.Models.ViewModels
 
         [DisplayName("Estado")]
         public string StatusDescription { get; set; }
+
+        public bool Used { get; set; }
     }
 }

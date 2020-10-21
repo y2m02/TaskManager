@@ -14,6 +14,6 @@ namespace TaskManagerApi.Models
         [StringLength(100)]
         public string Name { get; set; }
 
-        public virtual List<Assignment> Tasks { get; set; }
+        public virtual List<Assignment> Assignments { get; set; }
     }
 }
