@@ -1,16 +1,21 @@
 ﻿$("#Schedules").delegate(".editButton",
     "click",
-    function(e) {
+    function (e) {
         var grid = window.$("#Schedules").data("kendoGrid");
         var rowData = grid.dataItem(window.$(this).closest("tr"));
 
         fillFields(rowData);
 
-        window.$("#myModalSchedule").modal();
+        openModal(rowData.AssignmentId);
     });
 
 function fillFields(rowData) {
-    var assignmentId = checkIfValueExists("cbxAssingments", rowData.AssignmentId)
+    var scheduleId = rowData.ScheduleId;
+    //if (scheduleId > 0) {
+    //GetDropDownListData("cbxAssignments", rowData.AssignmentId, "Assignment");
+    //}
+
+    var assignmentId = checkIfValueExists("cbxAssignments", rowData.AssignmentId)
         ? rowData.AssignmentId
         : "";
 
@@ -18,22 +23,24 @@ function fillFields(rowData) {
         ? rowData.StatusId
         : "";
 
-    window.$("#cbxAssingments").val(assignmentId);
-    window.$("#dtpDate").val(rowData.Date);
+    window.$("#txtScheduleId").val(scheduleId);
+    //window.$("#cbxAssignments").val(assignmentId);
+    window.$("#dtpDate").data("kendoDatePicker").value(rowData.Date);
     window.$("#cbxStatuses").val(statusId);
     window.$("#txtNote").val(rowData.Note);
 }
 
 $("#myModalSchedule").on("hidden.bs.modal",
-    function() {
-        window.$("#cbxAssingments").val("");
-        window.$("#dtpDate").val("");
+    function () {
+        window.$("#txtScheduleId").val("");
+        window.$("#cbxAssignments").val("");
+        window.$("#dtpDate").data("kendoDatePicker").value("");
         window.$("#cbxStatuses").val("");
         window.$("#txtNote").val("");
 
         clearErrorMessage([
             {
-                'key': "cbxAssingments",
+                'key': "cbxAssignments",
                 'value': "lblAssingmentsError"
             },
             {
@@ -70,9 +77,9 @@ function createSchedule() {
     }
 
     var scheduleId = window.$("#txtScheduleId").val();
-    var assignmentId = window.$("#cbxAssignments").val();
-    var date = parseInt(window.$("#dtpDate").val());
-    var statusId = window.$("#cbxStatuses").val();
+    var assignmentId = parseInt(window.$("#cbxAssignments").val());
+    var date = window.$("#dtpDate").data("kendoDatePicker").value().toDateString();
+    var statusId = parseInt(window.$("#cbxStatuses").val());
     var note = window.$("#txtNote").val();
 
     var schedule = {
@@ -101,4 +108,14 @@ function createSchedule() {
     });
 
     return true;
+}
+
+$("#btnOpenModal").on("click",
+    function () {
+        openModal(0);
+    });
+
+function openModal(id) {
+    GetDropDownListData("cbxAssignments", id, "Assignment")
+    window.$("#myModalSchedule").modal();
 }

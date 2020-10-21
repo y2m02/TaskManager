@@ -39,7 +39,7 @@ function GetDropDownListData(elementId, id, controllerName) {
         success: function(result) {
             fillDropDownList(elementId, result);
             
-            if (id != null) {
+            if (id > 0) {
                 window.$("#" + elementId).val(id);
             }
         },
@@ -56,8 +56,8 @@ function fillDropDownList(elementId, result) {
         function(key, data) {
             var option = new Option();
 
-            window.$(option).val(data.id);
-            window.$(option).html(data.description);
+            window.$(option).val(data.ItemId);
+            window.$(option).html(data.Description);
             window.$("#" + elementId).append(option);
         });
 

@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using AutoMapper;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 using TaskManagerApi.Models;
 using TaskManagerApi.Models.Requests.Assignments;
 using TaskManagerApi.Models.Responses;
@@ -29,10 +29,14 @@ namespace TaskManagerApi.Controllers
         }
 
         [HttpGet]
-        [Route("GetAllForDropDownList")]
-        public async Task<IEnumerable<AssignmentForDropDownListResponse>> GetAllForDropDownList()
+        [Route("GetAllForDropDownList/{id}")]
+        public async Task<IEnumerable<ItemTypeResponse>> GetAllForDropDownList(int id)
         {
-            return Mapper.Map<IEnumerable<AssignmentForDropDownListResponse>>(await _assignmentRepository.GetAllForDropDownList());
+            var itemTypes = Mapper.Map<IEnumerable<ItemTypeResponse>>(
+                await _assignmentRepository.GetAllForDropDownList(id)
+            );
+
+            return itemTypes;
         }
 
         [HttpGet]

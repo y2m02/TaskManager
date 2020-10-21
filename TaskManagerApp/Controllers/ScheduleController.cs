@@ -24,13 +24,13 @@ namespace TaskManagerApp.Controllers
         public async Task<IActionResult> Index()
         {
             var itemTypes = await _apiClientService
-                .Post<IEnumerable<ItemTypeResponse>>(
+                .Post<List<ItemTypeResponse>>(
                 ApiPath.Get(ApiControllerName.ItemType),
-                new List<ItemType> { ItemType.Assignment, ItemType.Status }
+                new List<ItemType> { ItemType.Status }
             )
             .ConfigureAwait(false);
 
-            ViewBag.Assignments = itemTypes.Where(w => w.Type == ItemType.Assignment);
+            ViewBag.Assignments = new List<ItemTypeResponse>();
             ViewBag.Statuses = itemTypes.Where(w => w.Type == ItemType.Status);
 
             return View();

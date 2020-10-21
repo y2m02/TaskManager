@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using System;
 using TaskManagerApi.Models;
 using TaskManagerApi.Models.Enums;
 using TaskManagerApi.Models.Requests.Assignments;
@@ -27,7 +28,6 @@ namespace TaskManagerApi.Mappings
                 .ForMember(destination => destination.StatusDescription,
                     member => member.MapFrom(field =>
                         field.Schedule == null ? "Pendiente" : field.Schedule.Status.Description));
-            CreateMap<Assignment, AssignmentForDropDownListResponse>();
             CreateMap<AssignmentRequest, Assignment>();
             CreateMap<UpdateAssignmentRequest, Assignment>();
 
@@ -38,8 +38,12 @@ namespace TaskManagerApi.Mappings
                     member => member.MapFrom(field => field.Assignment.Store.Name))
                 .ForMember(destination => destination.StatusDescription,
                     member => member.MapFrom(field => field.Status.Description));
-            CreateMap<ScheduleRequest, Schedule>();
-            CreateMap<UpdateScheduleRequest, Schedule>();
+            CreateMap<ScheduleRequest, Schedule>()
+                .ForMember(destination => destination.Date,
+                    member => member.MapFrom(field => Convert.ToDateTime(field.Date.ToString("MMM/dd/yyyy"))));
+            CreateMap<UpdateScheduleRequest, Schedule>()
+                .ForMember(destination => destination.Date,
+                    member => member.MapFrom(field => Convert.ToDateTime(field.Date.ToString("MMM/dd/yyyy"))));
 
             CreateMap<Store, ItemTypeResponse>()
                 .ForMember(destination => destination.ItemId,
@@ -53,7 +57,7 @@ namespace TaskManagerApi.Mappings
                 .ForMember(destination => destination.ItemId,
                     member => member.MapFrom(field => field.AssignmentId))
                 .ForMember(destination => destination.Description,
-                    member => member.MapFrom(field => field.Description))
+                    member => member.MapFrom(field => $"{field.Store.Name.ToUpper()} - {field.Description}"))
                 .ForMember(destination => destination.Type,
                     member => member.MapFrom(field => ItemType.Assignment));
 

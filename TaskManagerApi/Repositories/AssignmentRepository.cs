@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore;
 using TaskManagerApi.Models;
 
 namespace TaskManagerApi.Repositories
@@ -9,7 +9,7 @@ namespace TaskManagerApi.Repositories
     public interface IAssignmentRepository
     {
         Task<IEnumerable<Assignment>> GetAll();
-        Task<IEnumerable<Assignment>> GetAllForDropDownList();
+        Task<IEnumerable<Assignment>> GetAllForDropDownList(int id = 0);
         Task<Assignment> GetById(int id);
         Task Create(Assignment entity);
         Task Update(Assignment entity);
@@ -38,10 +38,14 @@ namespace TaskManagerApi.Repositories
                 .ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<Assignment>> GetAllForDropDownList()
+        public async Task<IEnumerable<Assignment>> GetAllForDropDownList(int id)
         {
             return await Context.Assignments
-                .Where(w => w.Schedule == null)
+                .Include(w => w.Store)
+                .Where(w => w.Schedule == null ||
+                    w.Schedule != null && 
+                    w.AssignmentId == id
+                )
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
