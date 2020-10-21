@@ -38,7 +38,9 @@
                         .CheckAll(false)
                         .Messages(msg => msg
                             .SelectedItemsFormat("{0} opciones seleccionadas"))
-                        );
+                    )
+                    .ClientTemplate(@"<img src='images/statuses/#= StatusDescription #.png' class='rounded-circle' height='40' width='40' asp-append-version='true'/><div class='status-description'>#: StatusDescription #</div>")
+                    .Width(160);
                 columns.Command(command => command.Custom("Editar").HtmlAttributes(new Dictionary<string, object> {["class"] = "editButton"})).Width(80);
             })
             .Resizable(c => c.Columns(true))
