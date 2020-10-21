@@ -41,7 +41,7 @@ $("#myModalSchedule").on("hidden.bs.modal",
         clearErrorMessage([
             {
                 'key': "cbxAssignments",
-                'value': "lblAssingmentsError"
+                'value': "lblAssignmentsError"
             },
             {
                 'key': "dtpDate",
@@ -119,3 +119,37 @@ function openModal(id) {
     GetDropDownListData("cbxAssignments", id, "Assignment")
     window.$("#myModalSchedule").modal();
 }
+
+function onDataBound(e) {
+    var grid = this;
+
+    var today = new Date();
+
+    var day = today.getDate();
+    var month = today.getMonth();
+    var year = today.getFullYear();
+
+    today = new Date(year, month, day);
+
+    grid.tbody.find('>tr').each(function () {
+        // get the row item
+        var dataItem = grid.dataItem(this);
+
+        var dueDate = dataItem.Date;
+
+        day = dueDate.getDate();
+        month = dueDate.getMonth();
+        year = dueDate.getFullYear();
+
+        dueDate = new Date(year, month, day);
+
+        // check for the condition
+        if (today > dueDate) {
+            // add the formatting if condition is met
+            $(this).addClass('outOfDate');
+        } else {
+            $(this).removeClass('outOfDate');
+        }
+    })
+}
+

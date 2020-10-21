@@ -95,6 +95,7 @@
                     .Filter("Filtrar")
                     .Clear("Limpiar")))
             .Scrollable(s => s.Height(700))
+            .Events(e => e.DataBound("onDataBound"))
             .DataSource(dataSource => dataSource
                 .Ajax()
                 .PageSize(20)
@@ -102,6 +103,7 @@
                 .Sort(s => s.Add("StatusDescription").Descending())
                 .Model(model => model.Id(p => p.ScheduleId))
                 .Read(read => read.Action("GetAll", "Schedule"))
+                
             .Group(group => group.Add("StatusDescription", typeof(string), ListSortDirection.Descending))
             .Group(group => group.Add("Date", typeof(string), ListSortDirection.Ascending))
             .Group(group => group.Add("StoreName", typeof(string), ListSortDirection.Ascending))

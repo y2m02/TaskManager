@@ -15,9 +15,9 @@
     transform: scale(1.5);
 }
 
-.custom-file-input, .rounded-circle {
+/*.custom-file-input, .rounded-circle {
     cursor: pointer;
-}
+}*/
 
 .product-photo {
     background-position: center center;
@@ -45,4 +45,13 @@
     margin-left: auto;
     margin-right: auto;
     width: 350px;
+}
+
+.outOfDate {
+    background-color: red;
+    color: white;
+}
+
+.editButton {
+    color: black !important;
 }
