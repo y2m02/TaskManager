@@ -1,12 +1,21 @@
 ﻿function clearErrorMessage(parameters) {
     for (var i = 0; i < parameters.length; i++) {
-        window.$("#" + parameters[i].key).css("borderColor", "");
+        if (parameters[i].key == "dtpDate") {
+            window.$(".k-picker-wrap").css("borderColor", "");
+        } else {
+            window.$("#" + parameters[i].key).css("borderColor", "");
+        }
         window.$("#" + parameters[i].value).html("");
     }
 }
 
 function removeErrorMessage(id, messageId) {
-    window.$("#" + id).css("borderColor", "");
+    if (id == "dtpDate") {
+        window.$(".k-picker-wrap").css("borderColor", "");
+    } else {
+        window.$("#" + id).css("borderColor", "");
+    }
+
     window.$("#" + messageId).html("");
 }
 
@@ -14,7 +23,13 @@ function buildError(field, label) {
     var fieldId = "#" + field;
 
     if (window.$(fieldId).val() === "") {
-        window.$(fieldId).css("border-color", "Red");
+        if (field == "dtpDate") {
+            window.$(".k-picker-wrap").css("border-color", "red", "important");
+        } else {
+            window.$(fieldId).css("border-color", "red", "important");
+        }
+
+        
         window.$("#" + label).html("Campo requerido");
         return false;
     }
@@ -26,6 +41,7 @@ function buildError(field, label) {
 
 $(function() {
     window.$("input").attr("autocomplete", "off");
+    window.$("p").remove();
 });
 
 
