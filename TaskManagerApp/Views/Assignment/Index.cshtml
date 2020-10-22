@@ -1,4 +1,5 @@
 ﻿@using Kendo.Mvc
+@using TaskManagerApp.ApiHelpers
 @using TaskManagerApp.Models
 @using TaskManagerApp.Models.ViewModels
 @{
@@ -24,14 +25,7 @@
             .Columns(columns =>
             {
                 columns.Bound(c => c.AssignmentId).Hidden();
-                columns.Bound(c => c.Description).Width(200).Groupable(false);
-                columns.Bound(c => c.Used).Width(100)
-                    .Filterable(ftb => ftb
-                        .Multi(true)
-                        .CheckAll(false)
-                        .Messages(msg => msg
-                            .SelectedItemsFormat("{0} opciones seleccionadas"))
-                    );
+                columns.Bound(c => c.Description).Width(230).Groupable(false);
                 columns.Bound(c => c.StatusDescription).Width(100)
                     .Filterable(ftb => ftb
                         .Multi(true)
@@ -40,8 +34,15 @@
                             .SelectedItemsFormat("{0} opciones seleccionadas"))
                     )
                     .ClientTemplate(@"<img src='images/statuses/#= StatusDescription #.png' class='rounded-circle' height='40' width='40' asp-append-version='true'/><div class='status-description'>#: StatusDescription #</div>")
-                    .Width(160);
-                columns.Command(command => command.Custom("Editar").HtmlAttributes(new Dictionary<string, object> {["class"] = "editButton"})).Width(80);
+                    .Width(150);
+                columns.Command(command =>
+                {
+                    command.Custom("Editar").HtmlAttributes(new Dictionary<string, object> {["class"] = "editButton"});
+                    command.Custom("btnDelete")
+                        .Visible("deleteVisible")
+                        .Text("Eliminar")
+                        .Click("showRecordToDelete");
+                }).Width(110);
             })
             .Resizable(c => c.Columns(true))
             .Pageable(pageable => pageable
@@ -106,5 +107,28 @@
             ))
     </div>
 </div>
+
+@await Html.PartialAsync("DeletePartial")
+
+<script>
+    function showRecordToDelete(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem(window.$(e.currentTarget).closest("tr"));
+
+        window.$("#lblRecordId").html(dataItem.AssignmentId);
+
+        window.$("#lblDeleteMessage").removeAttr("hidden");
+
+        window.$("#btnDeleteAssignment").removeAttr("hidden");
+
+        window.$("#myModalDelete").modal();
+    }
+
+    window.$("#btnDeleteAssignment").on("click",
+        function () {
+            deleteRecord("@ApiControllerName.Assignment", "Assignments");
+        });
+</script>
 
 <script src="~/js/assignment.js"></script>

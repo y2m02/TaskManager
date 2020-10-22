@@ -13,6 +13,7 @@ namespace TaskManagerApi.Repositories
         Task<Assignment> GetById(int id);
         Task Create(Assignment entity);
         Task Update(Assignment entity);
+        Task Delete(Assignment entity);
     }
 
     public class AssignmentRepository : BaseRepository, IAssignmentRepository
@@ -69,6 +70,13 @@ namespace TaskManagerApi.Repositories
                 nameof(entity.Description),
                 nameof(entity.StoreId)
             });
+
+            await Save();
+        }
+
+        public async Task Delete(Assignment entity)
+        {
+            Context.Entry(entity).State = EntityState.Deleted;
 
             await Save();
         }

@@ -188,3 +188,8 @@ function deleteRecord(controllerName, griName) {
 function deleteVisible(dataItem) {
     return dataItem.Used == false;
 }
+
+$("#myModalDelete").on("hidden.bs.modal",
+    function() {
+        window.$("#lblRecordId").html("");
+    });

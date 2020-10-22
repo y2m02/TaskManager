@@ -48,5 +48,12 @@ namespace TaskManagerApi.Controllers
         {
             await _scheduleRepository.Update(Mapper.Map<Schedule>(request));
         }
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task Delete(int id)
+        {
+            await _scheduleRepository.Delete(Mapper.Map<Schedule>(new DeleteScheduleRequest(id)));
+        }
     }
 }

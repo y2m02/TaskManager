@@ -59,5 +59,12 @@ namespace TaskManagerApi.Controllers
         {
             await _assignmentRepository.Update(Mapper.Map<Assignment>(request));
         }
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task Delete(int id)
+        {
+            await _assignmentRepository.Delete(Mapper.Map<Assignment>(new DeleteAssignmentRequest(id)));
+        }
     }
 }

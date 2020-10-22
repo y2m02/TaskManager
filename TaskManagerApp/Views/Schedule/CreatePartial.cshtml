@@ -7,13 +7,13 @@
                 <h4 class="modal-title" id="myModalLabel">Crear - Editar</h4>
             </div>
             <div class="requiredFields">
-                @Html.Label("", "Campos con (*) son obligatorios.", new { @class = "text-danger" })
+                @Html.Label("", "Campos con (*) son obligatorios.", new {@class = "text-danger"})
             </div>
-            @Html.TextBoxFor(model => model.ScheduleId, new { @class = "form-control", Id = "txtScheduleId", hidden = true })
+            @Html.TextBoxFor(model => model.ScheduleId, new {@class = "form-control", Id = "txtScheduleId", hidden = true})
             <div class="modal-body">
                 <div class="form-group">
                     <div class="fieldNameAlign">
-                        @Html.LabelFor(model => model.AssignmentId) @Html.Label("", "*", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.AssignmentId) @Html.Label("", "*", new {@class = "text-danger"})
                     </div>
                     <div class="input-group mb-2 mr-sm-2">
                         <div class="input-group-prepend">
@@ -23,27 +23,27 @@
                                 </i>
                             </span>
                         </div>
-                        @Html.DropDownListFor(model => model.AssignmentId, new SelectList(ViewBag.Assignments, "ItemId", "Description"), "Elija una opción", new { @class = "form-control", Id = "cbxAssignments", onchange = "removeErrorMessage('cbxAssignments','lblAssignmentsError')" })
+                        @Html.DropDownListFor(model => model.AssignmentId, new SelectList(ViewBag.Assignments, "ItemId", "Description"), "Elija una opción", new {@class = "form-control", Id = "cbxAssignments", onchange = "removeErrorMessage('cbxAssignments','lblAssignmentsError')"})
                     </div>
                     <span id="lblAssignmentsError" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <div class="fieldNameAlign">
-                        @Html.LabelFor(model => model.Date) @Html.Label("", "*", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.Date) @Html.Label("", "*", new {@class = "text-danger"})
                     </div>
                     <div class="input-group mb-2 mr-sm-2">
                         @(Html.Kendo().DatePicker()
-                          .Name("dtpDate")
-                          .Format("dd/MM/yyyy")
-                          .WeekNumber()
-                          .HtmlAttributes(new { Id = "dtpDate", style = "width: 100%", onchange = "removeErrorMessage('dtpDate','lblDateError')" })
-                        )
+                            .Name("dtpDate")
+                            .Format("dd/MM/yyyy")
+                            .WeekNumber()
+                            .HtmlAttributes(new {Id = "dtpDate", style = "width: 100%", onchange = "removeErrorMessage('dtpDate','lblDateError')"})
+                            )
                     </div>
                     <span id="lblDateError" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <div class="fieldNameAlign">
-                        @Html.LabelFor(model => model.StatusId) @Html.Label("", "*", new { @class = "text-danger" })
+                        @Html.LabelFor(model => model.StatusId) @Html.Label("", "*", new {@class = "text-danger"})
                     </div>
                     <div class="input-group mb-2 mr-sm-2">
                         <div class="input-group-prepend">
@@ -53,7 +53,7 @@
                                 </i>
                             </span>
                         </div>
-                        @Html.DropDownListFor(model => model.StatusId, new SelectList(ViewBag.Statuses, "ItemId", "Description"), "Elija una opción", new { @class = "form-control", Id = "cbxStatuses", onchange = "removeErrorMessage('cbxStatuses','lblStatusesError')" })
+                        @Html.DropDownListFor(model => model.StatusId, new SelectList(ViewBag.Statuses, "ItemId", "Description"), "Elija una opción", new {@class = "form-control", Id = "cbxStatuses", onchange = "removeErrorMessage('cbxStatuses','lblStatusesError')"})
                     </div>
                     <span id="lblStatusesError" class="text-danger"></span>
                 </div>
@@ -69,13 +69,23 @@
                                 </i>
                             </span>
                         </div>
-                        @Html.TextBoxFor(model => model.Note, new { @class = "form-control", Id = "txtNote" })
+                        @Html.TextBoxFor(model => model.Note, new {@class = "form-control", Id = "txtNote"})
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <input type="button" value="Guardar" class="btn btn-primary" id="btnUpsert" onclick="return createSchedule();" />
-                <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="btnUpsert" onclick="return createSchedule();">
+                    <i class="fas fa-save"
+                       aria-hidden="true">
+                    </i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <i class="fas fa-times"
+                       aria-hidden="true">
+                    </i>
+                    Cerrar
+                </button>
             </div>
         </div>
     </div>

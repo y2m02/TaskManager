@@ -11,6 +11,7 @@ namespace TaskManagerApi.Repositories
         Task<Schedule> GetById(int id);
         Task Create(Schedule entity);
         Task Update(Schedule entity);
+        Task Delete(Schedule entity);
     }
 
     public class ScheduleRepository : BaseRepository, IScheduleRepository
@@ -58,6 +59,13 @@ namespace TaskManagerApi.Repositories
                 nameof(entity.StatusId),
                 nameof(entity.Note),
             });
+
+            await Save();
+        }
+
+        public async Task Delete(Schedule entity)
+        {
+            Context.Entry(entity).State = EntityState.Deleted;
 
             await Save();
         }
