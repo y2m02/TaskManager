@@ -59,5 +59,17 @@ namespace TaskManagerApp.Controllers
 
             return Json(await statuses.ToDataSourceResultAsync(request, ModelState));
         }
+
+        [HttpDelete]
+        public async Task<JsonResult> Delete(int id)
+        {
+            await _apiClientService
+                .Delete<object>(
+                    ApiPath.Delete(ApiControllerName.Status, id)
+                )
+                .ConfigureAwait(false);
+
+            return Json("deleted");
+        }
     }
 }

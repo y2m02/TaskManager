@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper.Internal;
 using Microsoft.EntityFrameworkCore;
@@ -14,6 +15,7 @@ namespace TaskManagerApi.Repositories
         Task BatchCreate(IEnumerable<Status> entities);
         Task Update(Status entity);
         Task BatchUpdate(IEnumerable<Status> entities);
+        Task Delete(Status entity);
     }
 
     public class StatusRepository : BaseRepository, IStatusRepository
@@ -40,6 +42,7 @@ namespace TaskManagerApi.Repositories
         {
             return await Context.Statuses
                 .Include(w => w.Schedules)
+                .OrderByDescending(w => w.Description)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
@@ -72,6 +75,13 @@ namespace TaskManagerApi.Repositories
                     nameof(entity.Description)
                 });
             });
+
+            await Save();
+        }
+
+        public async Task Delete(Status entity)
+        {
+            Context.Entry(entity).State = EntityState.Deleted;
 
             await Save();
         }

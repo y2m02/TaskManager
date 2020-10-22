@@ -13,12 +13,12 @@
     .Columns(columns =>
     {
         columns.Bound(c => c.StoreId).Hidden();
-        columns.Bound(c => c.Name).Width(350);
+        columns.Bound(c => c.Name);
         columns.Command(command => command.Custom("btnDelete")
             .Visible("deleteVisible")
             .Text("Eliminar")
             .Click("showRecordToDelete")
-        ).Width(180);
+        ).Width(130);
     })
     .ToolBar(toolbar =>
     {
@@ -115,13 +115,6 @@
 
     window.$("#btnDeleteStore").on("click",
         function () {
-            deleteRecord("Store", "Stores");
+            deleteRecord("@ApiControllerName.Store", "Stores");
         });
-
-    
-
-    function deleteVisible(dataItem) {
-        // hide the Edit button for the item with ProductID=1
-        return dataItem.Used == false;
-    }
 </script>

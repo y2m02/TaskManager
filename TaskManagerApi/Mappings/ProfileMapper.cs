@@ -26,6 +26,7 @@ namespace TaskManagerApi.Mappings
                     member => member.MapFrom(field => field.Schedules.Count > 0));
             CreateMap<StatusRequest, Status>();
             CreateMap<UpdateStatusRequest, Status>();
+            CreateMap<DeleteStatusRequest, Status>();
 
             CreateMap<Assignment, AssignmentResponse>()
                 .ForMember(destination => destination.StoreName,

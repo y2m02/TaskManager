@@ -183,3 +183,8 @@ function deleteRecord(controllerName, griName) {
         }
     });
 }
+
+
+function deleteVisible(dataItem) {
+    return dataItem.Used == false;
+}
