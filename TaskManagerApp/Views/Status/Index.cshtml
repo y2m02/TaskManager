@@ -1,5 +1,6 @@
 ﻿@using TaskManagerApp.Models
 @using TaskManagerApp.Models.ViewModels
+@using TaskManagerApp.ApiHelpers
 @{
     ViewData["Title"] = SpanishTitle.Status;
 }
@@ -12,8 +13,12 @@
     .Columns(columns =>
     {
         columns.Bound(c => c.StatusId).Hidden();
-        columns.Bound(c => c.Description).Width(350);
-        //columns.Command(command => command.Destroy().Text("Eliminar")).Width(90);
+        columns.Bound(c => c.Description);
+        columns.Command(command => command.Custom("btnDelete")
+            .Visible("deleteVisible")
+            .Text("Eliminar")
+            .Click("showRecordToDelete")
+            ).Width(130);
     })
     .ToolBar(toolbar =>
     {
@@ -28,7 +33,6 @@
     .Pageable(pageable => pageable
         .Refresh(true)
         .PageSizes(new[] {20, 35, 50})
-        //.ButtonCount(5)
         .Messages(msg => msg
             .Empty("Sin registros")
             .ItemsPerPage("registros por página")
@@ -82,14 +86,33 @@
         .Model(model => model.Id(p => p.StatusId))
         .Sort(s => s.Add("Description").Descending())
         .Read(read => read.Action("GetAll", "Status"))
-    .Create(create => create.Action("BatchCreate", "Status"))
-    .Update(update => update.Action("BatchUpdate", "Status"))
-    //.Destroy(delete => delete.Action("BatchDelete", "Category"))
+        .Create(create => create.Action("BatchCreate", "Status"))
+        .Update(update => update.Action("BatchUpdate", "Status"))
     ))
 
+@await Html.PartialAsync("DeletePartial")
 
 <script>
     function onRequestEnd(e) {
         redirectToIndex(e, "Statuses");
     }
+
+    function showRecordToDelete(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem(window.$(e.currentTarget).closest("tr"));
+
+        window.$("#lblRecordId").html(dataItem.StatusId);
+
+        window.$("#lblDeleteMessage").removeAttr("hidden");
+
+        window.$("#btnDeleteStatus").removeAttr("hidden");
+
+        window.$("#myModalDelete").modal();
+    }
+
+    window.$("#btnDeleteStatus").on("click",
+        function() {
+            deleteRecord("@ApiControllerName.Status", "Statuses");
+        });
 </script>

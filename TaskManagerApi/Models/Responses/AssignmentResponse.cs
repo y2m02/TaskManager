@@ -13,5 +13,7 @@
         public int StatusId { get; set; }
 
         public string StatusDescription { get; set; }
+
+        public bool Used { get; set; }
     }
 }

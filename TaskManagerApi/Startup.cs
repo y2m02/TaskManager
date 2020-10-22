@@ -43,7 +43,7 @@ namespace TaskManagerApi
                 });
             });
 
-            var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new MappingProfile()); });
+            var mappingConfig = new MapperConfiguration(mc => { mc.AddProfile(new ProfileMapper()); });
 
             services.AddSingleton(mappingConfig.CreateMapper());
 

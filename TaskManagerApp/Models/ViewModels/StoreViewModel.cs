@@ -10,5 +10,7 @@ namespace TaskManagerApp.Models.ViewModels
         [DisplayName("Nombre")]
         [Required(ErrorMessage = "Campo {0} requerido.")]
         public string Name { get; set; }
+
+        public bool Used { get; set; }
     }
 }

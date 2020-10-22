@@ -62,5 +62,12 @@ namespace TaskManagerApi.Controllers
         {
             await _statusRepository.BatchUpdate(Mapper.Map<IEnumerable<Status>>(request));
         }
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task Delete(int id)
+        {
+            await _statusRepository.Delete(Mapper.Map<Status>(new DeleteStatusRequest(id)));
+        }
     }
 }

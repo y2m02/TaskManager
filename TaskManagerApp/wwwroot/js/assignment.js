@@ -4,7 +4,6 @@
         var grid = window.$("#Assignments").data("kendoGrid");
         var rowData = grid.dataItem(window.$(this).closest("tr"));
 
-        //GetDropDownListData("cbxCategories", rowData.CategoryId, "Category");
         fillFields(rowData);
 
         window.$("#myModalAssignment").modal();

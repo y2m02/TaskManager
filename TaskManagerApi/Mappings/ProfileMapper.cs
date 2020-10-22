@@ -10,26 +10,35 @@ using TaskManagerApi.Models.Responses;
 
 namespace TaskManagerApi.Mappings
 {
-    public class MappingProfile : Profile
+    public class ProfileMapper : Profile
     {
-        public MappingProfile()
+        public ProfileMapper()
         {
-            CreateMap<Store, StoreResponse>();
+            CreateMap<Store, StoreResponse>()
+                .ForMember(destination => destination.Used,
+                    member => member.MapFrom(field => field.Assignments.Count > 0));
             CreateMap<StoreRequest, Store>();
             CreateMap<UpdateStoreRequest, Store>();
+            CreateMap<DeleteStoreRequest, Store>();
 
-            CreateMap<Status, StatusResponse>();
+            CreateMap<Status, StatusResponse>()
+                .ForMember(destination => destination.Used,
+                    member => member.MapFrom(field => field.Schedules.Count > 0));
             CreateMap<StatusRequest, Status>();
             CreateMap<UpdateStatusRequest, Status>();
+            CreateMap<DeleteStatusRequest, Status>();
 
             CreateMap<Assignment, AssignmentResponse>()
                 .ForMember(destination => destination.StoreName,
                     member => member.MapFrom(field => field.Store.Name))
                 .ForMember(destination => destination.StatusDescription,
                     member => member.MapFrom(field =>
-                        field.Schedule == null ? "Pendiente" : field.Schedule.Status.Description));
+                        field.Schedule == null ? "Pendiente" : field.Schedule.Status.Description))
+                .ForMember(destination => destination.Used,
+                    member => member.MapFrom(field => field.Schedule != null));
             CreateMap<AssignmentRequest, Assignment>();
             CreateMap<UpdateAssignmentRequest, Assignment>();
+            CreateMap<DeleteAssignmentRequest, Assignment>();
 
             CreateMap<Schedule, ScheduleResponse>()
                 .ForMember(destination => destination.AssignmentDescription,
@@ -44,6 +53,7 @@ namespace TaskManagerApi.Mappings
             CreateMap<UpdateScheduleRequest, Schedule>()
                 .ForMember(destination => destination.Date,
                     member => member.MapFrom(field => Convert.ToDateTime(field.Date.ToString("MMM/dd/yyyy"))));
+            CreateMap<DeleteScheduleRequest, Schedule>();
 
             CreateMap<Store, ItemTypeResponse>()
                 .ForMember(destination => destination.ItemId,

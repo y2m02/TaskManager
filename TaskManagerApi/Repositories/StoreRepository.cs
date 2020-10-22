@@ -14,6 +14,8 @@ namespace TaskManagerApi.Repositories
         Task BatchCreate(IEnumerable<Store> entities);
         Task Update(Store entity);
         Task BatchUpdate(IEnumerable<Store> entities);
+        Task Delete(Store entity);
+        Task BatchDelete(IEnumerable<Store> entities);
     }
 
     public class StoreRepository : BaseRepository, IStoreRepository
@@ -38,7 +40,10 @@ namespace TaskManagerApi.Repositories
 
         public async Task<IEnumerable<Store>> GetAll()
         {
-            return await Context.Stores.ToListAsync().ConfigureAwait(false);
+            return await Context.Stores
+                .Include(w => w.Assignments)
+                .ToListAsync()
+                .ConfigureAwait(false);
         }
 
         public async Task<Store> GetById(int id)
@@ -69,6 +74,20 @@ namespace TaskManagerApi.Repositories
                     nameof(entity.Name)
                 });
             });
+
+            await Save();
+        }
+
+        public async Task Delete(Store entity)
+        {
+            Context.Entry(entity).State = EntityState.Deleted;
+
+            await Save();
+        }
+
+        public async Task BatchDelete(IEnumerable<Store> entities)
+        {
+            entities.ForAll(entity => { Context.Entry(entity).State = EntityState.Deleted; });
 
             await Save();
         }

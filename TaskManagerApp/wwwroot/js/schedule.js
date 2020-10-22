@@ -116,7 +116,7 @@ $("#btnOpenModal").on("click",
     });
 
 function openModal(id) {
-    GetDropDownListData("cbxAssignments", id, "Assignment")
+    GetDropDownListData("cbxAssignments", id, "Assignment");
     window.$("#myModalSchedule").modal();
 }
 
@@ -131,11 +131,13 @@ function onDataBound(e) {
 
     today = new Date(year, month, day);
 
-    grid.tbody.find('>tr').each(function () {
+    grid.tbody.find('>tr').each(function() {
         // get the row item
         var dataItem = grid.dataItem(this);
 
         var dueDate = dataItem.Date;
+
+        var status = dataItem.StatusDescription;
 
         day = dueDate.getDate();
         month = dueDate.getMonth();
@@ -144,12 +146,12 @@ function onDataBound(e) {
         dueDate = new Date(year, month, day);
 
         // check for the condition
-        if (today > dueDate) {
+        if (today > dueDate && status != "Finalizada") {
             // add the formatting if condition is met
             $(this).addClass('outOfDate');
         } else {
             $(this).removeClass('outOfDate');
         }
-    })
+    });
 }
 

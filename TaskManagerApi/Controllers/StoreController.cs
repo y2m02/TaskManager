@@ -60,11 +60,26 @@ namespace TaskManagerApi.Controllers
             await _storeRepository.Update(Mapper.Map<Store>(request));
         }
 
-        [HttpPut]
+        [HttpPost]
         [Route("BatchUpdate")]
         public async Task BatchUpdate(IEnumerable<UpdateStoreRequest> request)
         {
             await _storeRepository.BatchUpdate(Mapper.Map<IEnumerable<Store>>(request));
+        }
+
+
+        [HttpDelete]
+        [Route("Delete/{id}")]
+        public async Task Delete(int id)
+        {
+            await _storeRepository.Delete(Mapper.Map<Store>(new DeleteStoreRequest(id)));
+        }
+
+        [HttpPost]
+        [Route("BatchDelete")]
+        public async Task BatchDelete(IEnumerable<DeleteStoreRequest> request)
+        {
+            await _storeRepository.BatchDelete(Mapper.Map<IEnumerable<Store>>(request));
         }
     }
 }

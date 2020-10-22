@@ -1,0 +1,50 @@
+﻿@using TaskManagerApp.ApiHelpers
+<div class="modal fade" id="myModalDelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Aviso</h4>
+            </div>
+            <span id="lblRecordId" hidden></span>
+            <div class="modal-body">
+                <div class="form-group">
+                   <span id="lblDeleteMessage" hidden>Está a punto de eliminar este registro.</span>
+                   <span id="lblCancelMessage" hidden>Está a punto de cancelar esta tarea.</span>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnDeleteStore" hidden>
+                    <i class="fas fa-plus"
+                       aria-hidden="true">
+                    </i>
+                    De acuerdo
+                </button>
+                <button type="button" class="btn btn-primary" id="btnDeleteStatus" hidden>
+                    <i class="fas fa-check"
+                       aria-hidden="true">
+                    </i>
+                    De acuerdo
+                </button>
+
+                <button type="button" class="btn btn-primary" id="btnDeleteAssignment" hidden>
+                    <i class="fas fa-check"
+                       aria-hidden="true">
+                    </i>
+                    De acuerdo
+                </button>
+                <button type="button" class="btn btn-primary" id="btnDeleteSchedule" hidden>
+                    <i class="fas fa-check"
+                       aria-hidden="true">
+                    </i>
+                    De acuerdo
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <i class="fas fa-times"
+                       aria-hidden="true">
+                    </i>
+                    Cancelar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -5,5 +5,7 @@
         public int StoreId { get; set; }
 
         public string Name { get; set; }
+
+        public bool Used { get; set; }
     }
 }

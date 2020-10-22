@@ -15,5 +15,9 @@
         public static string Update(string controller) => $"{controller}/Update";
 
         public static string BatchUpdate(string controller) => $"{controller}/BatchUpdate";
+
+        public static string Delete(string controller, int id) => $"{controller}/Delete/{id}";
+
+        public static string BatchDelete(string controller) => $"{controller}/BatchDelete";
     }
 }
