@@ -14,7 +14,11 @@
     {
         columns.Bound(c => c.StoreId).Hidden();
         columns.Bound(c => c.Name).Width(350);
-        //columns.Command(command => command.Destroy().Text("Eliminar")).Width(90);
+        columns.Command(command => command.Custom("btnDelete")
+            .Visible("deleteVisible")
+            .Text("Eliminar")
+            .Click("showRecordToDelete")
+        ).Width(180);
     })
     .ToolBar(toolbar =>
     {
@@ -88,9 +92,36 @@
     //.Destroy(delete => delete.Action("BatchDelete", "Category"))
     ))
 
+@await Html.PartialAsync("DeletePartial")
 
 <script>
     function onRequestEnd(e) {
         redirectToIndex(e, 'Stores');
+    }
+
+    function showRecordToDelete(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem(window.$(e.currentTarget).closest("tr"));
+
+        window.$("#lblRecordId").html(dataItem.StoreId);
+
+        window.$("#lblDeleteMessage").removeAttr("hidden");
+
+        window.$("#btnDeleteStore").removeAttr("hidden");
+
+        window.$("#myModalDelete").modal();
+    }
+
+    window.$("#btnDeleteStore").on("click",
+        function () {
+            deleteRecord("Store", "Stores");
+        });
+
+    
+
+    function deleteVisible(dataItem) {
+        // hide the Edit button for the item with ProductID=1
+        return dataItem.Used == false;
     }
 </script>

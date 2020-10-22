@@ -116,7 +116,7 @@ $("#btnOpenModal").on("click",
     });
 
 function openModal(id) {
-    GetDropDownListData("cbxAssignments", id, "Assignment")
+    GetDropDownListData("cbxAssignments", id, "Assignment");
     window.$("#myModalSchedule").modal();
 }
 

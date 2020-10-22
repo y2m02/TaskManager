@@ -89,7 +89,7 @@ function redirectToIndex(e, gridName) {
         //window.location.href = "@(Url.Action("Index", "Size"))";
         //window.location.href = "/" + controller + "/Index";
 
-        RefreshGrid(gridName)
+        RefreshGrid(gridName);
     }
 }
 
@@ -156,4 +156,30 @@ function RefreshGrid(gridName) {
     var grid  = window.$('#' + gridName).data("kendoGrid");
     grid.dataSource.read();
     grid.refresh();
+}
+
+function deleteRecord(controllerName, griName) {
+    document.body.style.cursor = 'wait';
+
+    var id  =  window.$("#lblRecordId").html();
+
+    window.$.ajax({
+        url: "/" + controllerName + "/Delete",
+        data: { id: id },
+        type: "DELETE",
+        content: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function(result) {
+            window.$('#myModalDelete').modal('toggle');
+
+            RefreshGrid(griName);
+            
+            document.body.style.cursor = 'default';
+        },
+        error: function(errorMessage) {
+            document.body.style.cursor = 'default';
+
+            alert(errorMessage.responseText);
+        }
+    });
 }

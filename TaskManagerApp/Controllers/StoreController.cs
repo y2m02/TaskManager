@@ -4,6 +4,7 @@ using Kendo.Mvc.Extensions;
 using Kendo.Mvc.UI;
 using Microsoft.AspNetCore.Mvc;
 using TaskManagerApp.ApiHelpers;
+using TaskManagerApp.Models.Requests;
 using TaskManagerApp.Models.ViewModels;
 
 namespace TaskManagerApp.Controllers
@@ -59,5 +60,32 @@ namespace TaskManagerApp.Controllers
 
             return Json(await stores.ToDataSourceResultAsync(request, ModelState));
         }
+
+        [HttpDelete]
+        public async Task<JsonResult> Delete(int id)
+        {
+            await _apiClientService
+                .Delete<object>(
+                    ApiPath.Delete(ApiControllerName.Store, id)
+                )
+                .ConfigureAwait(false);
+
+              return Json("deleted");
+        }
+
+        //[HttpPost]
+        //public async Task<IActionResult> BatchDelete([DataSourceRequest] DataSourceRequest request,
+        //    [Bind(Prefix = "models")] IEnumerable<StoreViewModel> stores)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        await _apiClientService.Post<object>(
+        //            ApiPath.BatchDelete(ApiControllerName.Store), 
+        //            stores
+        //        );
+        //    }
+
+        //    return Json(await stores.ToDataSourceResultAsync(request, ModelState));
+        //}
     }
 }

@@ -17,6 +17,7 @@ namespace TaskManagerApi.Mappings
             CreateMap<Store, StoreResponse>();
             CreateMap<StoreRequest, Store>();
             CreateMap<UpdateStoreRequest, Store>();
+            CreateMap<DeleteStoreRequest, Store>();
 
             CreateMap<Status, StatusResponse>();
             CreateMap<StatusRequest, Status>();
