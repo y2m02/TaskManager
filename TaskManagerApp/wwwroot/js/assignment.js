@@ -82,12 +82,12 @@ function createAssignment() {
     return true;
 }
 
-window.$("#cbxAssignments").on("change",
+window.$("#cbxStores").on("change",
     function() {
         removeErrorMessage('cbxStores','lblStoresError');
     });
 
-window.$("#cbxAssignments").on("input",
+window.$("#txtDescription").on("input",
     function() {
         removeErrorMessage('txtDescription','lblDescriptionError');
     });
