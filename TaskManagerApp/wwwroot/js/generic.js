@@ -41,6 +41,7 @@ function buildError(field, label) {
 
 $(function() {
     window.$("input").attr("autocomplete", "off");
+    //window.$("input").attr("data-valid-example","05/05/18");
     window.$("p").remove();
 });
 
@@ -80,17 +81,6 @@ function fillDropDownList(elementId, result) {
     window.$("#" + elementId).val(result[result.length - 1].id);
 }
 
-function checkIfValueExists(elementId, id) {
-    var options = window.$("#" + elementId + " option");
-
-    for (var i = 0; i < options.length; i++) {
-        if (options[i].value === id.toString()) {
-            return true;
-        }
-    }
-    return false;
-}
-
 function appendNewOption(elementId, id, description) {
     var option = new Option();
 
@@ -101,10 +91,6 @@ function appendNewOption(elementId, id, description) {
 
 function redirectToIndex(e, gridName) {
     if ((e.type == "create" || e.type == "update" || e.type == "destroy") && !e.response.modelState) {
-        //var data = e.response.Data[0];
-        //window.location.href = "@(Url.Action("Index", "Size"))";
-        //window.location.href = "/" + controller + "/Index";
-
         RefreshGrid(gridName);
     }
 }
@@ -144,29 +130,12 @@ $(function () {
     window.$(".numericField").focus(function () {
         var $this = window.$(this);
         $this.select();
-
-        // Work around Chrome's little problem
         $this.mouseup(function () {
-            // Prevent further mouseup intervention
             $this.unbind("mouseup");
             return false;
         });
     });
 });
-
-function convertToNumericFormat(quantity) {
-    var fixedQuantity = quantity.toFixed(2);
-    var length = fixedQuantity.length;
-    var digits = 6;
-
-    if (length > digits) {
-        var position = length - digits;
-
-        fixedQuantity = [fixedQuantity.slice(0, position), ",", fixedQuantity.slice(position)].join("");
-    }
-
-    return fixedQuantity;
-}
 
 function RefreshGrid(gridName) {
     var grid  = window.$('#' + gridName).data("kendoGrid");

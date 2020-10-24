@@ -33,7 +33,7 @@
                         .Messages(msg => msg
                             .SelectedItemsFormat("{0} opciones seleccionadas"))
                     );
-                columns.Bound(c => c.StatusDescription).Width(90)
+                columns.Bound(c => c.StatusDescription)
                     .Filterable(ftb => ftb
                         .Multi(true)
                         .CheckAll(false)
@@ -41,7 +41,7 @@
                             .SelectedItemsFormat("{0} opciones seleccionadas"))
                         )
                     .ClientTemplate(@"<img src='images/statuses/#= StatusDescription #.png' class='rounded-circle' height='40' width='40' asp-append-version='true'/><div class='status-description'>#: StatusDescription #</div>")
-                    .Width(150);
+                    .Width(110);
                 columns.Bound(c => c.Date).Width(90).Format("{0:dd/MM/yyyy}");
                 columns.Bound(c => c.Note).Width(100).Groupable(false);
                 columns.Command(command =>

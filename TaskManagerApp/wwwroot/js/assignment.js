@@ -10,11 +10,7 @@
     });
 
 function fillFields(rowData) {
-    var storeId = checkIfValueExists("cbxStores", rowData.StoreId)
-        ? rowData.StoreId
-        : "";
-
-    window.$("#cbxStores").val(storeId);
+    window.$("#cbxStores").val(rowData.StoreId);
     window.$("#txtAssignmentId").val(rowData.AssignmentId);
     window.$("#txtDescription").val(rowData.Description);
 }
@@ -61,7 +57,7 @@ function createAssignment() {
     var description = window.$("#txtDescription").val();
 
     var assignment = {
-        "AssignmentId": assignmentId == '' ? 0 : parseInt(assignment),
+        "AssignmentId": assignmentId == '' ? 0 : parseInt(assignmentId),
         "StoreId": storeId,
         "Description": description
     }

@@ -10,23 +10,9 @@
     });
 
 function fillFields(rowData) {
-    var scheduleId = rowData.ScheduleId;
-    //if (scheduleId > 0) {
-    //GetDropDownListData("cbxAssignments", rowData.AssignmentId, "Assignment");
-    //}
-
-    var assignmentId = checkIfValueExists("cbxAssignments", rowData.AssignmentId)
-        ? rowData.AssignmentId
-        : "";
-
-    var statusId = checkIfValueExists("cbxStatuses", rowData.StatusId)
-        ? rowData.StatusId
-        : "";
-
-    window.$("#txtScheduleId").val(scheduleId);
-    //window.$("#cbxAssignments").val(assignmentId);
+    window.$("#txtScheduleId").val(rowData.ScheduleId);
     window.$("#dtpDate").data("kendoDatePicker").value(rowData.Date);
-    window.$("#cbxStatuses").val(statusId);
+    window.$("#cbxStatuses").val(rowData.StatusId);
     window.$("#txtNote").val(rowData.Note);
 }
 
@@ -132,7 +118,6 @@ function onDataBound(e) {
     today = new Date(year, month, day);
 
     grid.tbody.find('>tr').each(function() {
-        // get the row item
         var dataItem = grid.dataItem(this);
 
         var dueDate = dataItem.Date;
@@ -145,12 +130,10 @@ function onDataBound(e) {
 
         dueDate = new Date(year, month, day);
 
-        // check for the condition
         if (today > dueDate && status != "Finalizada") {
-            // add the formatting if condition is met
-            $(this).addClass('outOfDate');
+            window.$(this).addClass('outOfDate');
         } else {
-            $(this).removeClass('outOfDate');
+            window.$(this).removeClass('outOfDate');
         }
     });
 }

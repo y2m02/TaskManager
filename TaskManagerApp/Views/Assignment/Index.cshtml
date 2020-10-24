@@ -25,8 +25,9 @@
             .Columns(columns =>
             {
                 columns.Bound(c => c.AssignmentId).Hidden();
-                columns.Bound(c => c.Description).Width(230).Groupable(false);
-                columns.Bound(c => c.StatusDescription).Width(100)
+                columns.Bound(c => c.Description).Width(190).Groupable(false);
+                columns.Bound(c => c.StoreName).Width(150);
+                columns.Bound(c => c.StatusDescription)
                     .Filterable(ftb => ftb
                         .Multi(true)
                         .CheckAll(false)
@@ -34,7 +35,7 @@
                             .SelectedItemsFormat("{0} opciones seleccionadas"))
                     )
                     .ClientTemplate(@"<img src='images/statuses/#= StatusDescription #.png' class='rounded-circle' height='40' width='40' asp-append-version='true'/><div class='status-description'>#: StatusDescription #</div>")
-                    .Width(150);
+                    .Width(90);
                 columns.Command(command =>
                 {
                     command.Custom("Editar").HtmlAttributes(new Dictionary<string, object> {["class"] = "editButton"});
