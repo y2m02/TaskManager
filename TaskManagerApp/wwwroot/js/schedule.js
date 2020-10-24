@@ -1,6 +1,6 @@
 ﻿$("#Schedules").delegate(".editButton",
     "click",
-    function (e) {
+    function(e) {
         var grid = window.$("#Schedules").data("kendoGrid");
         var rowData = grid.dataItem(window.$(this).closest("tr"));
 
@@ -17,7 +17,7 @@ function fillFields(rowData) {
 }
 
 $("#myModalSchedule").on("hidden.bs.modal",
-    function () {
+    function() {
         window.$("#txtScheduleId").val("");
         window.$("#cbxAssignments").val("");
         window.$("#dtpDate").data("kendoDatePicker").value("");
@@ -55,10 +55,10 @@ function isValid() {
 }
 
 function createSchedule() {
-    document.body.style.cursor = 'wait';
+    document.body.style.cursor = "wait";
 
     if (!isValid()) {
-        document.body.style.cursor = 'default';
+        document.body.style.cursor = "default";
         return false;
     }
 
@@ -69,12 +69,12 @@ function createSchedule() {
     var note = window.$("#txtNote").val();
 
     var schedule = {
-        "ScheduleId": scheduleId == '' ? 0 : parseInt(scheduleId),
+        "ScheduleId": scheduleId == "" ? 0 : parseInt(scheduleId),
         "AssignmentId": assignmentId,
         "Date": date,
         "StatusId": statusId,
         "Note": note
-    }
+    };
 
     window.$.ajax({
         url: "Schedule/Upsert",
@@ -82,13 +82,13 @@ function createSchedule() {
         type: "POST",
         content: "application/json;",
         dataType: "json",
-        success: function (result) {
-            $('#myModalSchedule').modal('toggle');
-            RefreshGrid('Schedules');
-            document.body.style.cursor = 'default';
+        success: function(result) {
+            $("#myModalSchedule").modal("toggle");
+            RefreshGrid("Schedules");
+            document.body.style.cursor = "default";
         },
-        error: function (errorMessage) {
-            document.body.style.cursor = 'default';
+        error: function(errorMessage) {
+            document.body.style.cursor = "default";
             alert(errorMessage.responseText);
         }
     });
@@ -97,7 +97,7 @@ function createSchedule() {
 }
 
 $("#btnOpenModal").on("click",
-    function () {
+    function() {
         openModal(0);
     });
 
@@ -117,7 +117,7 @@ function onDataBound(e) {
 
     today = new Date(year, month, day);
 
-    grid.tbody.find('>tr').each(function() {
+    grid.tbody.find(">tr").each(function() {
         var dataItem = grid.dataItem(this);
 
         var dueDate = dataItem.Date;
@@ -131,10 +131,24 @@ function onDataBound(e) {
         dueDate = new Date(year, month, day);
 
         if (today > dueDate && status != "Finalizada") {
-            window.$(this).addClass('outOfDate');
+            window.$(this).addClass("outOfDate");
         } else {
-            window.$(this).removeClass('outOfDate');
+            window.$(this).removeClass("outOfDate");
         }
     });
 }
 
+window.$("#cbxAssignments").on("change",
+    function() {
+        removeErrorMessage('cbxAssignments','lblAssignmentsError');
+    });
+
+window.$("#dtpDate").on("change",
+    function() {
+        removeErrorMessage("dtpDate", "lblDateError");
+    });
+
+window.$("#cbxStatuses").on("change",
+    function() {
+        removeErrorMessage('cbxStatuses','lblStatusesError');
+    });

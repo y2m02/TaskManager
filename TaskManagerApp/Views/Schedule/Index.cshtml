@@ -87,7 +87,7 @@
                             .IsEqualTo("Es igual a")
                             .IsNotEqualTo("Es diferente de")
                             .IsGreaterThanOrEqualTo("Mayor o igual que")
-                            .IsGreaterThan("Despúes de")
+                            .IsGreaterThan("Después de")
                             .IsLessThanOrEqualTo("Hasta")
                             .IsLessThan("Antes de"))
                         .ForNumber(num => num.Clear()
@@ -112,9 +112,9 @@
                 .Sort(s => s.Add("StatusDescription").Descending())
                 .Model(model => model.Id(p => p.ScheduleId))
                 .Read(read => read.Action("GetAll", "Schedule"))
-            .Group(group => group.Add("Date", typeof(string), ListSortDirection.Ascending))
-            .Group(group => group.Add("StatusDescription", typeof(string), ListSortDirection.Descending))
-            .Group(group => group.Add("StoreName", typeof(string), ListSortDirection.Ascending))
+                .Group(group => group.Add("StatusDescription", typeof(string), ListSortDirection.Descending))
+                .Group(group => group.Add("Date", typeof(string), ListSortDirection.Ascending))
+                .Group(group => group.Add("StoreName", typeof(string), ListSortDirection.Ascending))
             ))
     </div>
 </div>

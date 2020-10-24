@@ -81,3 +81,13 @@ function createAssignment() {
 
     return true;
 }
+
+window.$("#cbxAssignments").on("change",
+    function() {
+        removeErrorMessage('cbxStores','lblStoresError');
+    });
+
+window.$("#cbxAssignments").on("input",
+    function() {
+        removeErrorMessage('txtDescription','lblDescriptionError');
+    });
