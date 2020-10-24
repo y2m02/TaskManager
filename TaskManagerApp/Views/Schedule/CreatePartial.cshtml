@@ -45,12 +45,13 @@
                             .Name("dtpDate")
                             .Format("dd/MM/yyyy")
                             .WeekNumber()
+                            .Culture("es-DO")
                             .HtmlAttributes(new
                             {
                                 Id = "dtpDate",
                                 onchange = "removeErrorMessage('dtpDate','lblDateError')",
                                 style = "width: 100%",
-                                //placeholder = "DD/MM/YY",
+                                placeholder = "DD/MM/YYYY",
                             })
                             )
                         <span id="lblDateError" class="text-danger"></span>

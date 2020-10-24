@@ -48,6 +48,7 @@
                 {
                     command.Custom("Editar").HtmlAttributes(new Dictionary<string, object> {["class"] = "editButton"});
                     command.Custom("btnDelete")
+                        .HtmlAttributes(new Dictionary<string, object> { ["class"] = "cancelButton" })
                         .Visible("cancelVisible")
                         .Text("Cancelar")
                         .Click("showRecordToDelete");

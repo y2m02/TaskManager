@@ -41,7 +41,6 @@ function buildError(field, label) {
 
 $(function() {
     window.$("input").attr("autocomplete", "off");
-    //window.$("input").attr("data-valid-example","05/05/18");
     window.$("p").remove();
 });
 
@@ -77,8 +76,6 @@ function fillDropDownList(elementId, result) {
             window.$(option).html(data.Description);
             window.$("#" + elementId).append(option);
         });
-
-    window.$("#" + elementId).val(result[result.length - 1].id);
 }
 
 function appendNewOption(elementId, id, description) {
@@ -100,10 +97,6 @@ $(function () {
         e.preventDefault(); 
     });
 
-    //$('.numericField').bind('copy paste cut', function (e) {
-    //    e.preventDefault(); 
-    //});
-
     window.$("input[class*='numericField']").keydown(function (event) {
 
         if (event.shiftKey == true) {
@@ -124,7 +117,6 @@ $(function () {
 
         if (window.$(this).val().indexOf(".") !== -1 && event.keyCode == 190)
             event.preventDefault();
-        //if a decimal has been added, disable the "."-button
     });
 
     window.$(".numericField").focus(function () {
