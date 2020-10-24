@@ -69,7 +69,7 @@ function createAssignment() {
         content: "application/json;",
         dataType: "json",
         success: function (result) {
-            $('#myModalAssignment').modal('toggle');
+            window.$('#myModalAssignment').modal('toggle');
             RefreshGrid('Assignments');
             document.body.style.cursor = 'default';
         },

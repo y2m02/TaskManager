@@ -1,6 +1,6 @@
 ﻿$("#Schedules").delegate(".editButton",
     "click",
-    function(e) {
+    function (e) {
         var grid = window.$("#Schedules").data("kendoGrid");
         var rowData = grid.dataItem(window.$(this).closest("tr"));
 
@@ -17,7 +17,7 @@ function fillFields(rowData) {
 }
 
 $("#myModalSchedule").on("hidden.bs.modal",
-    function() {
+    function () {
         window.$("#txtScheduleId").val("");
         window.$("#cbxAssignments").val("");
         window.$("#dtpDate").data("kendoDatePicker").value("");
@@ -40,11 +40,31 @@ $("#myModalSchedule").on("hidden.bs.modal",
         ]);
     });
 
+function validateDate() {
+    var date = window.$("#dtpDate").val();
+
+    if (date === "") {
+        window.$(".k-picker-wrap").css("border-color", "red", "important");
+        window.$("#lblDateError").html("Campo requerido");
+        return false;
+    }
+    
+    var formatIsValid = moment(date, 'DD/MM/YYYY', true).isValid();
+
+    if (!formatIsValid) {
+        window.$(".k-picker-wrap").css("border-color", "red", "important");
+        window.$("#lblDateError").html("Formato inválido");
+        return false;
+    }
+
+    return true;
+}
+
 function isValid() {
     document.body.style.cursor = "wait";
 
     var assignmentIdIsValid = buildError("cbxAssignments", "lblAssignmentsError");
-    var dateIsValid = buildError("dtpDate", "lblDateError");
+    var dateIsValid = validateDate();
     var statusIdIsValid = buildError("cbxStatuses", "lblStatusesError");
 
     document.body.style.cursor = "default";
@@ -82,12 +102,12 @@ function createSchedule() {
         type: "POST",
         content: "application/json;",
         dataType: "json",
-        success: function(result) {
+        success: function (result) {
             $("#myModalSchedule").modal("toggle");
             RefreshGrid("Schedules");
             document.body.style.cursor = "default";
         },
-        error: function(errorMessage) {
+        error: function (errorMessage) {
             document.body.style.cursor = "default";
             alert(errorMessage.responseText);
         }
@@ -97,7 +117,7 @@ function createSchedule() {
 }
 
 $("#btnOpenModal").on("click",
-    function() {
+    function () {
         openModal(0);
     });
 
@@ -117,7 +137,7 @@ function onDataBound(e) {
 
     today = new Date(year, month, day);
 
-    grid.tbody.find(">tr").each(function() {
+    grid.tbody.find(">tr").each(function () {
         var dataItem = grid.dataItem(this);
 
         var dueDate = dataItem.Date;
@@ -139,16 +159,16 @@ function onDataBound(e) {
 }
 
 window.$("#cbxAssignments").on("change",
-    function() {
-        removeErrorMessage('cbxAssignments','lblAssignmentsError');
+    function () {
+        removeErrorMessage('cbxAssignments', 'lblAssignmentsError');
     });
 
 window.$("#dtpDate").on("change",
-    function() {
+    function () {
         removeErrorMessage("dtpDate", "lblDateError");
     });
 
 window.$("#cbxStatuses").on("change",
-    function() {
-        removeErrorMessage('cbxStatuses','lblStatusesError');
+    function () {
+        removeErrorMessage('cbxStatuses', 'lblStatusesError');
     });
