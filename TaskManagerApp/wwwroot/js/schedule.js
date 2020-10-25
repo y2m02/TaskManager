@@ -48,12 +48,12 @@ function validateDate() {
         window.$("#lblDateError").html("Campo requerido");
         return false;
     }
-    
+
     var formatIsValid = moment(date, 'DD/MM/YYYY', true).isValid();
 
     if (!formatIsValid) {
         window.$(".k-picker-wrap").css("border-color", "red", "important");
-        window.$("#lblDateError").html("Formato inválido");
+        window.$("#lblDateError").html("Formato inválido. Debe ser 'DD/MM/YYYY'");
         return false;
     }
 
@@ -103,7 +103,7 @@ function createSchedule() {
         content: "application/json;",
         dataType: "json",
         success: function (result) {
-            $("#myModalSchedule").modal("toggle");
+            window.$("#myModalSchedule").modal("toggle");
             RefreshGrid("Schedules");
             document.body.style.cursor = "default";
         },
@@ -123,32 +123,21 @@ $("#btnOpenModal").on("click",
 
 function openModal(id) {
     GetDropDownListData("cbxAssignments", id, "Assignment");
+
     window.$("#myModalSchedule").modal();
 }
 
 function onDataBound(e) {
     var grid = this;
 
-    var today = new Date();
-
-    var day = today.getDate();
-    var month = today.getMonth();
-    var year = today.getFullYear();
-
-    today = new Date(year, month, day);
+    var today = getOnlyDate(new Date());
 
     grid.tbody.find(">tr").each(function () {
         var dataItem = grid.dataItem(this);
 
-        var dueDate = dataItem.Date;
+        var dueDate = getOnlyDate(dataItem.Date);
 
         var status = dataItem.StatusDescription;
-
-        day = dueDate.getDate();
-        month = dueDate.getMonth();
-        year = dueDate.getFullYear();
-
-        dueDate = new Date(year, month, day);
 
         if (today > dueDate && status != "Finalizada") {
             window.$(this).addClass("outOfDate");
@@ -172,3 +161,11 @@ window.$("#cbxStatuses").on("change",
     function () {
         removeErrorMessage('cbxStatuses', 'lblStatusesError');
     });
+
+function getOnlyDate(date) {
+    var day = date.getDate();
+    var month = date.getMonth();
+    var year = date.getFullYear();
+
+    return new Date(year, month, day);
+}
