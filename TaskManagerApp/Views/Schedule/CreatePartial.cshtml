@@ -1,0 +1,116 @@
+﻿@model TaskManagerApp.Models.Requests.ScheduleRequest
+
+<div class="modal fade" id="myModalSchedule" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel">Crear - Editar</h4>
+            </div>
+            <div class="requiredFields">
+                @Html.Label("", "Campos con (*) son obligatorios.", new { @class = "text-danger" })
+            </div>
+            @Html.TextBoxFor(model => model.ScheduleId, new { @class = "form-control", Id = "txtScheduleId", hidden = true })
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="fieldNameAlign">
+                        @Html.LabelFor(model => model.AssignmentId) @Html.Label("", "*", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="far fa-calendar-alt"
+                                   aria-hidden="true">
+                                </i>
+                            </span>
+                        </div>
+                        @Html.DropDownListFor(model => model.AssignmentId,
+                            new SelectList(ViewBag.Assignments, "ItemId", "Description"),
+                            "Elija una opción",
+                            new
+                            {
+                                @class = "form-control",
+                                Id = "cbxAssignments",
+                                style = "width: 90%",
+                            })
+                        <span id="lblAssignmentsError" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="fieldNameAlign">
+                        @Html.LabelFor(model => model.Date) @Html.Label("", "*", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-group mb-2 mr-sm-2">
+                        @(Html.Kendo().DatePicker()
+                            .Name("dtpDate")
+                            .Format("dd/MM/yyyy")
+                            //.WeekNumber()
+                            .Culture("es-DO")
+                            .DisableDates(DayOfWeek.Saturday, DayOfWeek.Sunday)
+                            .HtmlAttributes(new
+                            {
+                                Id = "dtpDate",
+                                style = "width: 100%",
+                                placeholder = "DD/MM/YYYY",
+                            })
+                            )
+                        <span id="lblDateError" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="fieldNameAlign">
+                        @Html.LabelFor(model => model.StatusId) @Html.Label("", "*", new { @class = "text-danger" })
+                    </div>
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="far fa-calendar-check"
+                                   aria-hidden="true">
+                                </i>
+                            </span>
+                        </div>
+                        @Html.DropDownListFor(
+                            model => model.StatusId,
+                            new SelectList(ViewBag.Statuses, "ItemId", "Description"),
+                            "Elija una opción",
+                            new
+                            {
+                                @class = "form-control",
+                                Id = "cbxStatuses",
+                                style = "width: 90%",
+                            })
+                        <span id="lblStatusesError" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="fieldNameAlign">
+                        @Html.LabelFor(model => model.Note)
+                    </div>
+                    <div class="input-group mb-2 mr-sm-2">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">
+                                <i class="far fa-file-alt"
+                                   aria-hidden="true">
+                                </i>
+                            </span>
+                        </div>
+                        @Html.TextBoxFor(model => model.Note, new { @class = "form-control", Id = "txtNote" })
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" id="btnUpsert" onclick="return createSchedule();">
+                    <i class="fas fa-save"
+                       aria-hidden="true">
+                    </i>
+                    Guardar
+                </button>
+                <button type="button" class="btn btn-danger" data-dismiss="modal">
+                    <i class="fas fa-times"
+                       aria-hidden="true">
+                    </i>
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

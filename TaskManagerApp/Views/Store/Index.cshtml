@@ -1,0 +1,120 @@
+﻿@using TaskManagerApp.Models
+@using TaskManagerApp.Models.ViewModels
+@using TaskManagerApp.ApiHelpers
+@{
+    ViewData["Title"] = SpanishTitle.Store;
+}
+
+<h1>@SpanishTitle.Store</h1>
+
+@(Html.Kendo().Grid<StoreViewModel>
+    ()
+    .Name("Stores")
+    .Columns(columns =>
+    {
+        columns.Bound(c => c.StoreId).Hidden();
+        columns.Bound(c => c.Name);
+        columns.Command(command => command.Custom("btnDelete")
+            .Visible("deleteVisible")
+            .Text("Eliminar")
+            .Click("showRecordToDelete")
+        ).Width(130);
+    })
+    .ToolBar(toolbar =>
+    {
+        toolbar.Create().Text("Agrear");
+        toolbar.Save()
+            .SaveText("Guardar cambios")
+            .CancelText("Cancelar cambios");
+    })
+    .Editable(editable =>
+        editable.Mode(GridEditMode.InCell)
+    )
+    .Pageable(pageable => pageable
+        .Refresh(true)
+        .PageSizes(new[] {20, 35, 50})
+        //.ButtonCount(5)
+        .Messages(msg => msg
+            .Empty("Sin registros")
+            .ItemsPerPage("registros por página")
+            .First("Ir a la primera página")
+            .Last("Ir a la última página")
+            .Next("Página siguiente")
+            .Previous("Página anterior")
+            .Refresh("Refrescar")
+            .Display("{0} - {1} de {2} registros")
+            .Page("Página")
+            .MorePages("Más páginas")))
+    .Navigatable()
+    .Sortable()
+    .Filterable(filterable => filterable
+        .Extra(true)
+        .Operators(op =>
+            op.ForString(str => str.Clear()
+                .Contains("Contiene")
+                .DoesNotContain("No contiene")
+                .IsEqualTo("Es igual a")
+                .IsNotEqualTo("Es diferente de")
+                .StartsWith("Comienza con")
+                .EndsWith("Termina con"))
+                .ForDate(date => date.Clear()
+                    .IsEqualTo("Es igual a")
+                    .IsNotEqualTo("Es diferente de")
+                    .IsGreaterThanOrEqualTo("Mayor o igual que")
+                    .IsGreaterThan("Después de")
+                    .IsLessThanOrEqualTo("Hasta")
+                    .IsLessThan("Antes de"))
+                .ForNumber(num => num.Clear()
+                    .IsEqualTo("Es igual a")
+                    .IsNotEqualTo("Es diferente de")
+                    .IsGreaterThanOrEqualTo("Mayor o igual que")
+                    .IsGreaterThan("Mayor que")
+                    .IsLessThanOrEqualTo("Menor o igual que")
+                    .IsLessThan("Menor que")))
+        .Messages(msg => msg
+            .Info("Mostrar registros con valor que:")
+            .And("Y")
+            .Or("O")
+            .Filter("Filtrar")
+            .Clear("Limpiar")))
+    .Scrollable(s => s.Height(700))
+    .DataSource(dataSource => dataSource
+        .Ajax()
+        .Batch(true)
+        .PageSize(20)
+        .ServerOperation(false)
+        .Events(events => events.RequestEnd("onRequestEnd"))
+        .Model(model => model.Id(p => p.StoreId))
+        .Sort(s => s.Add("Name").Ascending())
+        .Read(read => read.Action("GetAll", "Store"))
+    .Create(create => create.Action("BatchCreate", "Store"))
+    .Update(update => update.Action("BatchUpdate", "Store"))
+    //.Destroy(delete => delete.Action("BatchDelete", "Category"))
+    ))
+
+@await Html.PartialAsync("DeletePartial")
+
+<script>
+    function onRequestEnd(e) {
+        redirectToIndex(e, 'Stores');
+    }
+
+    function showRecordToDelete(e) {
+        e.preventDefault();
+
+        var dataItem = this.dataItem(window.$(e.currentTarget).closest("tr"));
+
+        window.$("#lblRecordId").html(dataItem.StoreId);
+
+        window.$("#lblDeleteMessage").removeAttr("hidden");
+
+        window.$("#btnDeleteStore").removeAttr("hidden");
+
+        window.$("#myModalDelete").modal();
+    }
+
+    window.$("#btnDeleteStore").on("click",
+        function () {
+            deleteRecord("@ApiControllerName.Store", "Stores");
+        });
+</script>
