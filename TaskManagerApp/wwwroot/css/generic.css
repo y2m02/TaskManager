@@ -52,6 +52,11 @@
     color: white;
 }
 
+/*.outOfDate:hover {
+    background-color: red !important;
+    color: white !important;
+}*/
+
 .editButton, .cancelButton {
     color: black !important;
 }

@@ -124,6 +124,25 @@ $("#btnOpenModal").on("click",
 function openModal(id) {
     GetDropDownListData("cbxAssignments", id, "Assignment");
 
+    var cbxStatus = window.$("#cbxStatuses");
+    var date = window.$("#dtpDate").val();
+
+    if (date == "") {
+        cbxStatus.attr("disabled", false);
+    } else {
+        var today = getOnlyDate(new Date());
+        var splitDate = date.split("/");
+
+        var scheduleDate = new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
+
+        if (scheduleDate > today) {
+            cbxStatus.attr("disabled", true);
+        } else {
+            cbxStatus.attr("disabled", false);
+        }
+    }
+
+
     window.$("#myModalSchedule").modal();
 }
 
@@ -154,7 +173,27 @@ window.$("#cbxAssignments").on("change",
 
 window.$("#dtpDate").on("change",
     function () {
-        removeErrorMessage("dtpDate", "lblDateError");
+        var cbxStatus = window.$("#cbxStatuses");
+
+        if (validateDate()) {
+            removeErrorMessage("dtpDate", "lblDateError");
+
+            var today = getOnlyDate(new Date());
+
+            var date = window.$("#dtpDate").val();
+            var splitDate = date.split("/");
+
+            var scheduleDate = new Date(splitDate[2], splitDate[1] - 1, splitDate[0]);
+
+            if (scheduleDate > today) {
+                cbxStatus.val("1");
+                cbxStatus.attr("disabled", true);
+            } else {
+                cbxStatus.attr("disabled", false);
+            }
+        } else {
+            cbxStatus.attr("disabled", false);
+        }
     });
 
 window.$("#cbxStatuses").on("change",
