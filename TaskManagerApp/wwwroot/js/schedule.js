@@ -1,6 +1,8 @@
 ﻿$("#Schedules").delegate(".editButton",
     "click",
     function (e) {
+        e.preventDefault();
+
         var grid = window.$("#Schedules").data("kendoGrid");
         var rowData = grid.dataItem(window.$(this).closest("tr"));
 

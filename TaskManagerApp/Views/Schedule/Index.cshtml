@@ -18,7 +18,6 @@
         <br />
         <br />
     </div>
-    @await Html.PartialAsync("CreatePartial")
     <div>
         @(Html.Kendo().Grid<ScheduleViewModel>()
             .Name("Schedules")
@@ -46,7 +45,8 @@
                 columns.Bound(c => c.Note).Width(100).Groupable(false);
                 columns.Command(command =>
                 {
-                    command.Custom("Editar").HtmlAttributes(new Dictionary<string, object> {["class"] = "editButton"});
+                    command.Custom("Editar")
+                    .HtmlAttributes(new Dictionary<string, object> {["class"] = "editButton"});
                     command.Custom("btnDelete")
                         .HtmlAttributes(new Dictionary<string, object> { ["class"] = "cancelButton" })
                         .Visible("cancelVisible")
@@ -118,6 +118,7 @@
             ))
     </div>
 </div>
+@await Html.PartialAsync("CreatePartial")
 @await Html.PartialAsync("DeletePartial")
 
 <script>

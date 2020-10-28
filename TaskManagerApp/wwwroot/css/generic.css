@@ -69,3 +69,7 @@
 .fieldRequired {
     border-color: red;
 }
+
+/*body.modal-open {
+    overflow: hidden;
+}*/
