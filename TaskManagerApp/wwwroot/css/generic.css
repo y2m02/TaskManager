@@ -52,6 +52,11 @@
     color: white;
 }
 
+.k-alt outOfDate {
+    background-color: red;
+    color: white;
+}
+
 /*.outOfDate:hover {
     background-color: red !important;
     color: white !important;

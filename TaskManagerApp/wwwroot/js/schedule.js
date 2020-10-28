@@ -142,7 +142,6 @@ function openModal(id) {
         }
     }
 
-
     window.$("#myModalSchedule").modal();
 }
 
@@ -159,11 +158,24 @@ function onDataBound(e) {
         var status = dataItem.StatusDescription;
 
         if (today > dueDate && status != "Finalizada") {
+            window.$(this).removeClass("k-alt");
             window.$(this).addClass("outOfDate");
         } else {
             window.$(this).removeClass("outOfDate");
         }
     });
+
+    var groups = grid.dataSource.group();
+
+    if (groups.length) {
+        grid.tbody.children(".k-grouping-row").each(function () {
+            var row = $(this),
+                groupKey = rowGroupKey(row, grid);
+            if (collapsed[groupKey]) {
+                grid.collapseRow(row);
+            }
+        });
+    }
 }
 
 window.$("#cbxAssignments").on("change",
@@ -208,3 +220,30 @@ function getOnlyDate(date) {
 
     return new Date(year, month, day);
 }
+
+    var collapsed = {};
+
+    $(function () {
+        var grid = $("#Schedules").data("kendoGrid");
+        grid.table.on("click", ".k-grouping-row .k-i-collapse, .k-grouping-row .k-i-expand", function (e) {
+            var row = $(this).closest("tr"),
+                groupKey = rowGroupKey(row, grid);
+
+            if ($(this).hasClass("k-i-collapse")) {
+                collapsed[groupKey] = false;
+            }
+            else {
+                collapsed[groupKey] = true;
+            }
+        });
+    });
+
+    function rowGroupKey(row, grid) {
+        var next = row.nextUntil("[data-uid]").next(),
+            item = grid.dataItem(next.length ? next : row.next()),
+            groupIdx = row.children(".k-group-cell").length,
+            groups = grid.dataSource.group(),
+            field = grid.dataSource.group()[groupIdx].field,
+            groupValue = item[field];
+        return "" + groupIdx + groupValue;
+    }

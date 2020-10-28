@@ -29,7 +29,7 @@ function buildError(field, label) {
             window.$(fieldId).css("border-color", "red", "important");
         }
 
-        
+
         window.$("#" + label).html("Campo requerido");
         return false;
     }
@@ -39,7 +39,7 @@ function buildError(field, label) {
     return true;
 }
 
-$(function() {
+$(function () {
     window.$("input").attr("autocomplete", "off");
     window.$("p").remove();
 });
@@ -52,14 +52,14 @@ function GetDropDownListData(elementId, id, controllerName) {
         type: "GET",
         content: "application/json;charset=utf-8",
         dataType: "json",
-        success: function(result) {
+        success: function (result) {
             fillDropDownList(elementId, result);
-            
+
             if (id > 0) {
                 window.$("#" + elementId).val(id);
             }
         },
-        error: function(errorMessage) {
+        error: function (errorMessage) {
             alert(errorMessage.responseText);
         }
     });
@@ -69,7 +69,7 @@ function fillDropDownList(elementId, result) {
     window.$("#" + elementId).children("option:not(:first)").remove();
 
     window.$.each(result,
-        function(key, data) {
+        function (key, data) {
             var option = new Option();
 
             window.$(option).val(data.ItemId);
@@ -94,7 +94,7 @@ function redirectToIndex(e, gridName) {
 
 $(function () {
     window.$('.numericField').bind('paste', function (e) {
-        e.preventDefault(); 
+        e.preventDefault();
     });
 
     window.$("input[class*='numericField']").keydown(function (event) {
@@ -130,15 +130,24 @@ $(function () {
 });
 
 function RefreshGrid(gridName) {
-    var grid  = window.$('#' + gridName).data("kendoGrid");
+    var grid = window.$('#' + gridName).data("kendoGrid");
+
+    //localStorage["kendo-grid-options"] = kendo.stringify(grid.getOptions());
+
     grid.dataSource.read();
     grid.refresh();
+
+    //var options = localStorage["kendo-grid-options"];
+    //if (options) {
+    //    grid.setOptions(JSON.parse(options));
+    //    localStorage["kendo-grid-options"] = null;
+    //}
 }
 
 function deleteRecord(controllerName, griName) {
     document.body.style.cursor = 'wait';
 
-    var id  =  window.$("#lblRecordId").html();
+    var id = window.$("#lblRecordId").html();
 
     window.$.ajax({
         url: "/" + controllerName + "/Delete",
@@ -146,14 +155,14 @@ function deleteRecord(controllerName, griName) {
         type: "DELETE",
         content: "application/json;charset=utf-8",
         dataType: "json",
-        success: function(result) {
+        success: function (result) {
             window.$('#myModalDelete').modal('toggle');
 
             RefreshGrid(griName);
-            
+
             document.body.style.cursor = 'default';
         },
-        error: function(errorMessage) {
+        error: function (errorMessage) {
             document.body.style.cursor = 'default';
 
             alert(errorMessage.responseText);
@@ -167,6 +176,6 @@ function deleteVisible(dataItem) {
 }
 
 $("#myModalDelete").on("hidden.bs.modal",
-    function() {
+    function () {
         window.$("#lblRecordId").html("");
     });
