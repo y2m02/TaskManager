@@ -48,8 +48,8 @@
 }
 
 .outOfDate {
-    background-color: red;
-    color: white;
+    background-color: red !important;
+    color: white !important;
 }
 
 .k-alt outOfDate {

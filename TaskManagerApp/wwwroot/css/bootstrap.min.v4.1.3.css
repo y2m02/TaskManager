@@ -19873,8 +19873,8 @@ div.k-grid-norecords {
 
 .k-group-cell, .k-grouping-row {
     border-color: #dde2e7;
-    color: #212529;
-    background-color: #f8f9fa
+    color: #212529 !important;
+    background-color: #f8f9fa !important
 }
 
 .k-column-list-item:hover, .k-columnmenu-item:hover {
