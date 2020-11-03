@@ -73,3 +73,9 @@
 /*body.modal-open {
     overflow: hidden;
 }*/
+
+@media (min-width: 1200px) {
+    .container {
+        max-width: 1470px !important;
+    }
+}
