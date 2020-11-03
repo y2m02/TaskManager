@@ -159,7 +159,7 @@ function onDataBound(e) {
 
         var status = dataItem.StatusDescription;
 
-        if (today > dueDate && status != "Finalizada") {
+        if (today > dueDate && status != "Finalizada" && status != "Detenida") {
             window.$(this).removeClass("k-alt");
             window.$(this).addClass("outOfDate");
         } else {

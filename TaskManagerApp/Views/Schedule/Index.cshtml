@@ -25,7 +25,7 @@
             {
                 columns.Bound(c => c.ScheduleId).Hidden();
                 columns.Bound(c => c.AssignmentDescription).Width(150).Groupable(false);
-                columns.Bound(c => c.StoreName).Width(100)
+                columns.Bound(c => c.StoreName).Width(130)
                     .Filterable(ftb => ftb
                         .Multi(true)
                         .CheckAll(false)
@@ -42,7 +42,7 @@
                     .ClientTemplate(@"<img src='images/statuses/#= StatusDescription #.png' class='rounded-circle' height='40' width='40' asp-append-version='true'/><div class='status-description'>#: StatusDescription #</div>")
                     .Width(110);
                 columns.Bound(c => c.Date).Width(90).Format("{0:dd/MM/yyyy}");
-                columns.Bound(c => c.Note).Width(100).Groupable(false);
+                columns.Bound(c => c.Note).Width(110).Groupable(false);
                 columns.Command(command =>
                 {
                     command.Custom("Editar")
@@ -52,7 +52,7 @@
                         .Visible("cancelVisible")
                         .Text("Cancelar")
                         .Click("showRecordToDelete");
-                }).Width(150);
+                }).Width(110);
             })
             .Resizable(c => c.Columns(true))
             .Pageable(pageable => pageable
