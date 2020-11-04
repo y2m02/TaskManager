@@ -48,7 +48,7 @@ namespace TaskManagerApi
             services.AddSingleton(mappingConfig.CreateMapper());
 
             services.AddDbContext<TaskManagerContext>(w =>
-                w.UseSqlServer(Configuration.GetConnectionString("TaskManagerConnection")));
+                w.UseMySQL(Configuration.GetConnectionString("TaskManagerConnection")));
 
             var builder = new ContainerBuilder();
             builder.RegisterModule(new CompositionRoot.CompositionRootResolver());
