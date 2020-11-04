@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
+using MySql.Data.EntityFrameworkCore.Metadata;
 
 namespace TaskManagerApi.Migrations
 {
@@ -12,7 +13,7 @@ namespace TaskManagerApi.Migrations
                 columns: table => new
                 {
                     StatusId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -25,7 +26,7 @@ namespace TaskManagerApi.Migrations
                 columns: table => new
                 {
                     StoreId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Name = table.Column<string>(maxLength: 100, nullable: false)
                 },
                 constraints: table =>
@@ -38,7 +39,7 @@ namespace TaskManagerApi.Migrations
                 columns: table => new
                 {
                     AssignmentId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Description = table.Column<string>(maxLength: 500, nullable: false),
                     StoreId = table.Column<int>(nullable: false)
                 },
@@ -58,7 +59,7 @@ namespace TaskManagerApi.Migrations
                 columns: table => new
                 {
                     ScheduleId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
+                        .Annotation("MySQL:ValueGenerationStrategy", MySQLValueGenerationStrategy.IdentityColumn),
                     Date = table.Column<DateTime>(nullable: false),
                     AssignmentId = table.Column<int>(nullable: false),
                     StatusId = table.Column<int>(nullable: true),
