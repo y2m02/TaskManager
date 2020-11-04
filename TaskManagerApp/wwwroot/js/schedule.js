@@ -1,6 +1,7 @@
 ﻿$("#Schedules").delegate(".editButton",
     "click",
     function (e) {
+        document.body.style.cursor = 'wait';
         e.preventDefault();
 
         var grid = window.$("#Schedules").data("kendoGrid");
@@ -8,7 +9,7 @@
 
         fillFields(rowData);
 
-        openModal(rowData.AssignmentId);
+        document.body.style.cursor = 'default';
     });
 
 function fillFields(rowData) {
@@ -16,6 +17,8 @@ function fillFields(rowData) {
     window.$("#dtpDate").data("kendoDatePicker").value(rowData.Date);
     window.$("#cbxStatuses").val(rowData.StatusId);
     window.$("#txtNote").val(rowData.Note);
+
+    GetAssignmentDropDownListData(rowData.AssignmentId);
 }
 
 $("#myModalSchedule").on("hidden.bs.modal",
@@ -120,11 +123,14 @@ function createSchedule() {
 
 $("#btnOpenModal").on("click",
     function () {
-        openModal(0);
+        document.body.style.cursor = 'wait';
+
+        GetAssignmentDropDownListData(0);
+
+        document.body.style.cursor = 'default';
     });
 
-function openModal(id) {
-    GetDropDownListData("cbxAssignments", id, "Assignment");
+function openModal() {
 
     var cbxStatus = window.$("#cbxStatuses");
     var date = window.$("#dtpDate").val();
@@ -223,29 +229,51 @@ function getOnlyDate(date) {
     return new Date(year, month, day);
 }
 
-    var collapsed = {};
+var collapsed = {};
 
-    $(function () {
-        var grid = $("#Schedules").data("kendoGrid");
-        grid.table.on("click", ".k-grouping-row .k-i-collapse, .k-grouping-row .k-i-expand", function (e) {
-            var row = $(this).closest("tr"),
-                groupKey = rowGroupKey(row, grid);
+$(function () {
+    var grid = $("#Schedules").data("kendoGrid");
+    grid.table.on("click", ".k-grouping-row .k-i-collapse, .k-grouping-row .k-i-expand", function (e) {
+        var row = $(this).closest("tr"),
+            groupKey = rowGroupKey(row, grid);
 
-            if ($(this).hasClass("k-i-collapse")) {
-                collapsed[groupKey] = false;
-            }
-            else {
-                collapsed[groupKey] = true;
-            }
-        });
+        if ($(this).hasClass("k-i-collapse")) {
+            collapsed[groupKey] = false;
+        }
+        else {
+            collapsed[groupKey] = true;
+        }
     });
+});
 
-    function rowGroupKey(row, grid) {
-        var next = row.nextUntil("[data-uid]").next(),
-            item = grid.dataItem(next.length ? next : row.next()),
-            groupIdx = row.children(".k-group-cell").length,
-            groups = grid.dataSource.group(),
-            field = grid.dataSource.group()[groupIdx].field,
-            groupValue = item[field];
-        return "" + groupIdx + groupValue;
-    }
+function rowGroupKey(row, grid) {
+    var next = row.nextUntil("[data-uid]").next(),
+        item = grid.dataItem(next.length ? next : row.next()),
+        groupIdx = row.children(".k-group-cell").length,
+        groups = grid.dataSource.group(),
+        field = grid.dataSource.group()[groupIdx].field,
+        groupValue = item[field];
+    return "" + groupIdx + groupValue;
+}
+
+function GetAssignmentDropDownListData(id) {
+    window.$.ajax({
+        url: "/Assignment/GetAllForDropDownList",
+        data: { id: id },
+        type: "GET",
+        content: "application/json;charset=utf-8",
+        dataType: "json",
+        success: function (result) {
+            fillDropDownList("cbxAssignments", result);
+
+            if (id > 0) {
+                window.$("#cbxAssignments").val(id);
+            }
+
+            openModal();
+        },
+        error: function (errorMessage) {
+            alert(errorMessage.responseText);
+        }
+    });
+}
