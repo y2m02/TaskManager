@@ -7,8 +7,14 @@ namespace TaskManagerApp.Models.ViewModels
     {
         public int ScheduleId { get; set; }
 
-        [DisplayName("Fecha")]
+        [DisplayName("Iniciada en")]
         public DateTime Date { get; set; }
+
+        [DisplayName("Finalizada en")]
+        public DateTime? EndDate { get; set; }
+
+        [DisplayName("Días transcurridos")]
+        public double TotalDays { get; set; }
 
         public int AssignmentId { get; set; }
 

@@ -24,8 +24,8 @@
             .Columns(columns =>
             {
                 columns.Bound(c => c.ScheduleId).Hidden();
-                columns.Bound(c => c.AssignmentDescription).Width(150).Groupable(false);
-                columns.Bound(c => c.StoreName).Width(130)
+                columns.Bound(c => c.AssignmentDescription).Width(130).Groupable(false);
+                columns.Bound(c => c.StoreName).Width(120)
                     .Filterable(ftb => ftb
                         .Multi(true)
                         .CheckAll(false)
@@ -40,9 +40,11 @@
                             .SelectedItemsFormat("{0} opciones seleccionadas"))
                         )
                     .ClientTemplate(@"<img src='images/statuses/#= StatusDescription #.png' class='rounded-circle' height='40' width='40' asp-append-version='true'/><div class='status-description'>#: StatusDescription #</div>")
-                    .Width(110);
-                columns.Bound(c => c.Date).Width(90).Format("{0:dd/MM/yyyy}");
-                columns.Bound(c => c.Note).Width(110).Groupable(false);
+                    .Width(95);
+                columns.Bound(c => c.Date).Width(85).Format("{0:dd/MM/yyyy}");
+                columns.Bound(c => c.EndDate).Width(100).Format("{0:dd/MM/yyyy}");
+                columns.Bound(c => c.TotalDays).Groupable(false).Width(100);
+                //columns.Bound(c => c.Note).Width(110).Groupable(false);
                 columns.Command(command =>
                 {
                     command.Custom("Editar")
@@ -52,7 +54,7 @@
                         .Visible("cancelVisible")
                         .Text("Cancelar")
                         .Click("showRecordToDelete");
-                }).Width(110);
+                }).Width(120);
             })
             .Resizable(c => c.Columns(true))
             .Pageable(pageable => pageable

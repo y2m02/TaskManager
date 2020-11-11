@@ -8,6 +8,10 @@ namespace TaskManagerApi.Models.Responses
 
         public DateTime Date { get; set; }
 
+        public DateTime? EndDate { get; set; }
+
+        public double TotalDays => GetTotalDays();
+
         public int AssignmentId { get; set; }
 
         public string AssignmentDescription { get; set; }
@@ -19,5 +23,18 @@ namespace TaskManagerApi.Models.Responses
         public string StatusDescription { get; set; }
 
         public string Note { get; set; }
+
+        private double GetTotalDays()
+        {
+            var endDate = EndDate == null
+                ? DateTime.Now.Date
+                : EndDate.GetValueOrDefault().Date;
+
+            var totalDays = (endDate - Date).TotalDays;
+
+            return totalDays < 1
+                ? 1
+                : totalDays;
+        }
     }
 }

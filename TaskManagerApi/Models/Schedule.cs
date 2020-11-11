@@ -13,6 +13,8 @@ namespace TaskManagerApi.Models
         [Required]
         public DateTime Date { get; set; }
 
+        public DateTime? EndDate { get; set; }
+
         public int AssignmentId { get; set; }
 
         public int? StatusId { get; set; }

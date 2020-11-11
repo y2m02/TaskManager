@@ -49,10 +49,14 @@ namespace TaskManagerApi.Mappings
                     member => member.MapFrom(field => field.Status.Description));
             CreateMap<ScheduleRequest, Schedule>()
                 .ForMember(destination => destination.Date,
-                    member => member.MapFrom(field => Convert.ToDateTime(field.Date.ToString("MMM/dd/yyyy"))));
+                    member => member.MapFrom(field => Convert.ToDateTime(field.Date.ToString("MMM/dd/yyyy"))))
+                .ForMember(destination => destination.EndDate,
+                    member => member.MapFrom(field => field.StatusId == 4 ? (DateTime?)DateTime.Now.Date : null));
             CreateMap<UpdateScheduleRequest, Schedule>()
                 .ForMember(destination => destination.Date,
-                    member => member.MapFrom(field => Convert.ToDateTime(field.Date.ToString("MMM/dd/yyyy"))));
+                    member => member.MapFrom(field => Convert.ToDateTime(field.Date.ToString("MMM/dd/yyyy"))))
+                .ForMember(destination => destination.EndDate,
+                    member => member.MapFrom(field => field.StatusId == 4 ? (DateTime?)DateTime.Now.Date : null));
             CreateMap<DeleteScheduleRequest, Schedule>();
 
             CreateMap<Store, ItemTypeResponse>()
