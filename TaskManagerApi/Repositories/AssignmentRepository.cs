@@ -44,9 +44,10 @@ namespace TaskManagerApi.Repositories
             return await Context.Assignments
                 .Include(w => w.Store)
                 .Where(w => w.Schedule == null ||
-                    w.Schedule != null && 
+                    w.Schedule != null &&
                     w.AssignmentId == id
                 )
+                .OrderBy(w => w.Description)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }

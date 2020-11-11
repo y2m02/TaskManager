@@ -26,7 +26,13 @@
             {
                 columns.Bound(c => c.AssignmentId).Hidden();
                 columns.Bound(c => c.Description).Width(190).Groupable(false);
-                columns.Bound(c => c.StoreName).Width(150);
+                columns.Bound(c => c.StoreName).Width(150)
+                    .Filterable(ftb => ftb
+                        .Multi(true)
+                        .CheckAll(false)
+                        .Messages(msg => msg
+                            .SelectedItemsFormat("{0} opciones seleccionadas"))
+                    );
                 columns.Bound(c => c.StatusDescription)
                     .Filterable(ftb => ftb
                         .Multi(true)

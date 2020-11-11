@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper.Internal;
 using Microsoft.EntityFrameworkCore;
@@ -42,6 +43,7 @@ namespace TaskManagerApi.Repositories
         {
             return await Context.Stores
                 .Include(w => w.Assignments)
+                .OrderBy(w => w.Name)
                 .ToListAsync()
                 .ConfigureAwait(false);
         }
