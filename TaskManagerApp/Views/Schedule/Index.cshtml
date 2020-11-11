@@ -57,20 +57,6 @@
                 }).Width(120);
             })
             .Resizable(c => c.Columns(true))
-            .Pageable(pageable => pageable
-                .Refresh(true)
-                .PageSizes(new[] {20, 35, 50})
-                .Messages(msg => msg
-                    .Empty("Sin registros")
-                    .ItemsPerPage("registros por página")
-                    .First("Ir a la primera página")
-                    .Last("Ir a la última página")
-                    .Next("Página siguiente")
-                    .Previous("Página anterior")
-                    .Refresh("Refrescar")
-                    .Display("{0} - {1} de {2} registros")
-                    .Page("Página")
-                    .MorePages("Más páginas")))
             .Navigatable()
             .Sortable()
             .Groupable(g => g
@@ -109,7 +95,6 @@
             .Events(e => e.DataBound("onDataBound"))
             .DataSource(dataSource => dataSource
                 .Ajax()
-                .PageSize(20)
                 .ServerOperation(false)
                 .Sort(s => s.Add("StatusDescription").Descending())
                 .Model(model => model.Id(p => p.ScheduleId))

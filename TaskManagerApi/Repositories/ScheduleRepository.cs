@@ -58,6 +58,7 @@ namespace TaskManagerApi.Repositories
                 nameof(entity.AssignmentId),
                 nameof(entity.StatusId),
                 nameof(entity.Note),
+                nameof(entity.EndDate),
             });
 
             await Save();
