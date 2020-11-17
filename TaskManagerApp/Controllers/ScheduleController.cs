@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using TaskManagerApi.Models.Responses;
 using TaskManagerApp.ApiHelpers;
+using TaskManagerApp.Models;
 using TaskManagerApp.Models.Enums;
 using TaskManagerApp.Models.Requests;
 using TaskManagerApp.Models.ViewModels;
@@ -26,12 +26,13 @@ namespace TaskManagerApp.Controllers
             var itemTypes = await _apiClientService
                 .Post<List<ItemTypeResponse>>(
                 ApiPath.Get(ApiControllerName.ItemType),
-                new List<ItemType> { ItemType.Status }
+                new List<ItemType> { ItemType.Status, ItemType.Store }
             )
             .ConfigureAwait(false);
 
             ViewBag.Assignments = new List<ItemTypeResponse>();
             ViewBag.Statuses = itemTypes.Where(w => w.Type == ItemType.Status);
+            ViewBag.Stores = itemTypes.Where(w => w.Type == ItemType.Store);
 
             return View();
         }

@@ -1,6 +1,6 @@
 ﻿using TaskManagerApp.Models.Enums;
 
-namespace TaskManagerApi.Models.Responses
+namespace TaskManagerApp.Models
 {
     public class ItemTypeResponse
     {

@@ -29,6 +29,11 @@
                     .Filterable(ftb => ftb
                         .Multi(true)
                         .CheckAll(false)
+                        .BindTo(((IEnumerable<ItemTypeResponse>)ViewBag.Stores)
+                        .Select(store => new
+                        {
+                            StoreName = store.Description
+                        }))
                         .Messages(msg => msg
                             .SelectedItemsFormat("{0} opciones seleccionadas"))
                     );
@@ -36,6 +41,11 @@
                     .Filterable(ftb => ftb
                         .Multi(true)
                         .CheckAll(false)
+                        .BindTo(((IEnumerable<ItemTypeResponse>)ViewBag.Statuses)
+                        .Select(status => new
+                        {
+                            StatusDescription = status.Description
+                        }))
                         .Messages(msg => msg
                             .SelectedItemsFormat("{0} opciones seleccionadas"))
                         )
