@@ -30,11 +30,31 @@ namespace TaskManagerApi.Models.Responses
                 ? DateTime.Now.Date
                 : EndDate.GetValueOrDefault().Date;
 
-            var totalDays = (endDate - Date).TotalDays;
+            var totalDays = 0;
 
-            return totalDays < 1
-                ? 1
-                : totalDays;
+            var date = Date.Date;
+
+            while (date <= endDate)
+            {
+                if (IsWeekend(date))
+                {
+                    date = date.AddDays(1);
+                    continue;
+                }
+
+                totalDays += 1;
+
+                date = date.AddDays(1);
+            }
+
+            return totalDays;
+        }
+
+        private bool IsWeekend(DateTime date)
+        {
+            return
+                date.DayOfWeek == DayOfWeek.Saturday ||
+                date.DayOfWeek == DayOfWeek.Sunday;
         }
     }
 }
